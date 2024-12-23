@@ -1,15 +1,3 @@
-
---[[
-  github: https://github.com/LorekeeperZinnia/Dex
-  
-  New Dex
-  Final Version
-  Developed by Moon
-  Modified for Infinite Yield
-  
-  Dex is a debugging suite designed to help the user debug games and find any potential vulnerabilities.
-]]
-
 local ServicesMt = {
   __index = function(self, index)
     rawset(self, index, game:GetService(index))
