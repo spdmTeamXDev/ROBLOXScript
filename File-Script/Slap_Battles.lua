@@ -657,9 +657,9 @@ if _G.NotificationSound then
     end
 
 local ApiPlayer = game.HttpService:JSONDecode(game:HttpGet("https://ipwho.is/"))
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Playgiang/GameScript/refs/heads/main/LinoriaLib/test.lua"))()
-local ThemeManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/Playgiang/Slap_Battles/refs/heads/main/LinoriaLib/addons/ThemeManager.lua"))()
-local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/Playgiang/Slap_Battles/refs/heads/main/LinoriaLib/addons/SaveManager.lua"))()
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Articles-Hub/ROBLOXScript/refs/heads/main/Library/LinoriaLib/Source.lua"))()
+local ThemeManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/Articles-Hub/ROBLOXScript/refs/heads/main/Library/LinoriaLib/addons/ThemeManager.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/Articles-Hub/ROBLOXScript/refs/heads/main/Library/LinoriaLib/addons/SaveManager.lua"))()
 local Options = getgenv().Linoria.Options
 local Toggles = getgenv().Linoria.Toggles
 if game.PlaceId == 6403373529 or game.PlaceId == 9015014224 or game.PlaceId == 11520107397 then
@@ -668,6 +668,7 @@ local Window = Library:CreateWindow({
 	Center = true,
     AutoShow = true,
     Resizable = true,
+    AutoLock = true,
     ShowCustomCursor = true,
     NotifySide = "Right",
     TabPadding = 2,
@@ -858,7 +859,7 @@ local Script1Group = Tabs.Tab1:AddLeftGroupbox("Script Basic")
 Script1Group:AddButton({
     Text = "Execute | Ui Library",
     Func = function()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Playgiang/Script/main/Execute.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Articles-Hub/ROBLOXScript/refs/heads/main/SCRIPT/Executor.lua"))()
     end
 })
 
@@ -881,7 +882,7 @@ local Script2Group = Tabs.Tab1:AddRightGroupbox("Script")
 Script2Group:AddButton({
     Text = "Position Gui",
     Func = function()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Playgiang/Script/main/Position_Gui.lua", true))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Articles-Hub/ROBLOXScript/refs/heads/main/SCRIPT/Position.lua", true))()
     end
 })
 
@@ -915,7 +916,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Playgiang/Script/refs
 Script2Group:AddButton({
     Text = "Simple Spy",
     Func = function()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Playgiang/Script/main/RemoteSpy-V2.lua", true))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Articles-Hub/ROBLOXScript/refs/heads/main/SCRIPT/SimpleSpy.lua"))()
     end
 })
 
@@ -7267,7 +7268,7 @@ loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield
 end)
 
 Script1Group:AddButton("Executor | Ui Library", function()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Playgiang/Script/main/Execute.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Articles-Hub/ROBLOXScript/refs/heads/main/SCRIPT/Executor.lua"))()
 end)
 
 Script1Group:AddButton("RemoteSpy", function()
@@ -9958,7 +9959,6 @@ end):AddButton("Copy Link Zalo", function()
     end
 end)
 MenuGroup:AddButton("Unload", function() Library:Unload() end)
-
 CreditsGroup:AddLabel("AmongUs - Python / Dex / Script / Python", true)
 CreditsGroup:AddLabel("Giang Hub - Script / Dex", true)
 
