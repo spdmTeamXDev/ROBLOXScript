@@ -4681,6 +4681,7 @@ function Library:CreateWindow(...)
             Library.CantDragForced = not Library.CantDragForced;
             LockUIButton.Text = Library.CantDragForced and "Unlock UI" or "Lock UI";
         end)
+    end;
 if Config.AutoShow then task.spawn(Library.Toggle) end
 if Config.AutoLock == true then 
 task.spawn(function()
