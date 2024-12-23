@@ -4681,17 +4681,19 @@ function Library:CreateWindow(...)
             Library.CantDragForced = not Library.CantDragForced;
             LockUIButton.Text = Library.CantDragForced and "Unlock UI" or "Lock UI";
         end)
-    end;
-if Config.AutoShow then task.spawn(Library.Toggle) end
-if Config.AutoLock == true then 
-task.spawn(function()
-Library.CantDragForced = true;
-LockUIButton.Text = "Unlock UI";
-end) 
-end
+        
+    if Config.AutoShow then task.spawn(Library.Toggle) end
+    if Config.AutoLock then 
+        task.spawn(function()
+            Library.CantDragForced = true;
+            LockUIButton.Text = "Unlock UI";
+         end) 
+     end
 
-Window.Holder = Outer;
-Library.Window = Window;
+    Window.Holder = Outer;
+    Library.Window = Window;
+    return Window;
+end;
 
 local function OnPlayerChange()
     local PlayerList = GetPlayersString();
