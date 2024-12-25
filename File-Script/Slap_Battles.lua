@@ -909,7 +909,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scrip
 Script2Group:AddButton({
     Text = "Dex V4",
     Func = function()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Playgiang/Script/refs/heads/main/Dex-V4-Mobile.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Articles-Hub/ROBLOXScript/refs/heads/main/SCRIPT/Dex-v4.lua"))()
     end
 })
 
@@ -935,8 +935,8 @@ game.Workspace.NoChanged.Value = Value
 }):AddKeyPicker("ToggleAnti", {
    Default = "X",
    Text = "Toggle Anti",
-   Mode = Library.IsMobile and "Toggle" ,
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle" ,
+   SyncToggleState = true
 })
 
 local Anti2Group = Tabs.Tab2:AddRightGroupbox("Anti")
@@ -2530,8 +2530,8 @@ end
 }):AddKeyPicker("BusStab", {
    Default = "Z",
    Text = "Bus Stab",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 Badge2Group:AddToggle("Toolbox Farm", {
@@ -2559,8 +2559,8 @@ end
 }):AddKeyPicker("ToolboxFarm", {
    Default = "Z",
    Text = "Toolbox Farm",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 Badge2Group:AddToggle("Peep Farm", {
@@ -2588,8 +2588,8 @@ end
 }):AddKeyPicker("PeepFarm", {
    Default = "Z",
    Text = "Peep Farm",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 Badge2Group:AddToggle("Hallow Jack Farm", {
@@ -2616,8 +2616,8 @@ end
 }):AddKeyPicker("HallowJackFarm", {
    Default = "S",
    Text = "Hallow Jack Farm",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 Badge2Group:AddToggle("Phase Or Jet Farm", {
@@ -2637,8 +2637,8 @@ end
 }):AddKeyPicker("PhaseOrJetFarm", {
    Default = "U",
    Text = "Phase & Jet Farm",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 Badge2Group:AddToggle("MATERIALIZE Farm", {
@@ -2658,8 +2658,8 @@ end
 }):AddKeyPicker("MATERIALIZEFarm", {
    Default = "F",
    Text = "MATERIALIZE Farm",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 Badge2Group:AddToggle("Phase Or Jet Glitch", {
@@ -2683,8 +2683,8 @@ end
 }):AddKeyPicker("PhaseOrJetGlitch", {
    Default = "L",
    Text = "Phase & Jet Glitch",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 Badge2Group:AddToggle("Gift Farm", {
@@ -2704,8 +2704,8 @@ end
 }):AddKeyPicker("GiftFarm", {
    Default = "K",
    Text = "Gift Farm",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 Badge2Group:AddDropdown("Farm Brick", {
@@ -3168,8 +3168,8 @@ end
 }):AddKeyPicker("Fly", {
    Default = "R",
    Text = "Fly",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 TabBoxMisc1 = Tabs.Tab5:AddLeftTabbox()
@@ -3194,8 +3194,8 @@ end
 }):AddKeyPicker("AutofarmSlapples", {
    Default = "M",
    Text = "Autofarm Slapples",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
  Misc1Basic:AddToggle("Autofarm Candy", {
@@ -3215,8 +3215,8 @@ end
 }):AddKeyPicker("AutofarmCandy", {
    Default = "C",
    Text = "Toggle Anti",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 Misc1Basic:AddButton({
@@ -3871,12 +3871,16 @@ game:GetService("ReplicatedStorage").Events.Fisherman:FireServer("cast")
 end
 task.wait()
 end
+while _G.OnAbility and game.Players.LocalPlayer.leaderstats.Glove.Value == "Angler" do
+
+task.wait()
+end
     end
 }):AddKeyPicker("SpamAbility", {
    Default = "B",
    Text = "Auto Spam Ability",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 Misc1Basic:AddToggle("Spam Stun Untitled Tag", {
@@ -3908,30 +3912,27 @@ end
     end
 })
 
-Misc1Basic:AddToggle("Brick Tween Player", {
-    Text = "Brick Tween",
+Misc1Basic:AddToggle("Brick Player", {
+    Text = "Brick Player",
     Default = false, 
     Callback = function(Value) 
 _G.BrickTeleport = Value
 while _G.BrickTeleport do
 for i,v in pairs(game.Players:GetChildren()) do
 if v ~= game.Players.LocalPlayer and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and v.Character then
-if v.Character:FindFirstChild("entered") and v.Character:FindFirstChild("HumanoidRootPart") and v.Character:FindFirstChild("stevebody") == nil and v.Character:FindFirstChild("rock") == nil and v.Character.HumanoidRootPart.BrickColor ~= BrickColor.new("New Yeller") and v.Character.Ragdolled.Value == false and v.Character:FindFirstChild("Mirage") == nil then
-if 25 >= (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Character.HumanoidRootPart.Position).Magnitude then
+if game.Players.LocalPlayer.Character:FindFirstChild("entered") and v.Character:FindFirstChild("entered") and v.Character:FindFirstChild("HumanoidRootPart") and v.Character:FindFirstChild("stevebody") == nil and v.Character:FindFirstChild("rock") == nil and v.Character.HumanoidRootPart.BrickColor ~= BrickColor.new("New Yeller") and v.Character.Ragdolled.Value == false and v.Character:FindFirstChild("Mirage") == nil then
 if game.Workspace:FindFirstChild("Union") then
+v.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(-5, 0, 0)
 for i, a in pairs(game.Workspace:GetChildren()) do
         if a.Name == "Union" then
-           Tween = game:GetService("TweenService"):Create(a, TweenInfo.new(0.1, Enum.EasingStyle.Linear), {CFrame = v.Character.HumanoidRootPart.CFrame})
-           Tween:Play()
-           Tween.Completed:Wait()
+           a.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(-5, 0, 0)
         end
     end
 end
 end
 end
 end
-end
-task.wait(0.3)
+task.wait(0.1)
 end
     end
 })
@@ -4271,8 +4272,8 @@ end
 }):AddKeyPicker("SlapAura", {
    Default = "H",
    Text = "Slap Aura",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 _G.ReachShukuchi = 50
@@ -4393,8 +4394,8 @@ end
 }):AddKeyPicker("Hitbox", {
    Default = "Z",
    Text = "Hitbox Player & Mod",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 _G.GloveExtendReach = 5
@@ -4492,8 +4493,8 @@ end
 }):AddKeyPicker("ExtendGlove", {
    Default = "C",
    Text = "Extend Glove",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
  Misc1Basic:AddInput("Auto Change Nametag", {
@@ -4839,8 +4840,8 @@ _G.ColorESP = Value
 }):AddKeyPicker("EspGlove", {
    Default = "T",
    Text = "Esp Glove",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 _G.DistanceEsp = false
@@ -7446,8 +7447,8 @@ end
 }):AddKeyPicker("AntiRing", {
    Default = "X",
    Text = "Anti Ring",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 Misc3Group:AddToggle("Remove Meteors", {
@@ -7468,8 +7469,8 @@ end
 }):AddKeyPicker("RemoveMeteors", {
    Default = "X",
    Text = "Remove Big Meteors",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 Misc3Group:AddToggle("Anti Void Damage", {
@@ -7486,8 +7487,8 @@ end
 }):AddKeyPicker("AntiVoidDamage", {
    Default = "X",
    Text = "Anti Void Damage",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 Misc3Group:AddToggle("Anti Ragdoll", {
@@ -7509,8 +7510,8 @@ end
 }):AddKeyPicker("AntiRagdoll", {
    Default = "X",
    Text = "Anti Ragdoll",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 elseif game.PlaceId == 9431156611 then
 local Window = Library:CreateWindow({
@@ -7599,8 +7600,8 @@ end
 }):AddKeyPicker("SlapAura", {
    Default = "F",
    Text = "Slap Aura",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 Combat1Group:AddSlider("Extend Glove", {
@@ -7697,8 +7698,8 @@ end
 }):AddKeyPicker("ExtendGlove", {
    Default = "H",
    Text = "Extend Glove",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 _G.ReachHitbox = 10
@@ -7740,8 +7741,8 @@ end
 }):AddKeyPicker("Hitbox", {
    Default = "Z",
    Text = "Hitbox Player",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 Combat1Group:AddInput("FlySpeed", {
@@ -7807,8 +7808,8 @@ end
 }):AddKeyPicker("Fly", {
    Default = "R",
    Text = "Fly",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 Combat1Group:AddButton({
@@ -7919,8 +7920,8 @@ _G.ColorESP = Value
 }):AddKeyPicker("GloveEsp", {
    Default = "B",
    Text = "Glove Esp",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 _G.NameEsp = false
@@ -8015,8 +8016,8 @@ _G.ColorESP1 = Value
 }):AddKeyPicker("ItemEsp", {
    Default = "L",
    Text = "Item Esp",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 _G.DistanceEsp = false
@@ -8067,8 +8068,8 @@ end)
 }):AddKeyPicker("AntiZone", {
    Default = "K",
    Text = "Anti Zone",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 Anti1Group:AddToggle("Anti Ice", {
@@ -8090,8 +8091,8 @@ end
 }):AddKeyPicker("AntiIce", {
    Default = "K",
    Text = "Anti Ice",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 Anti1Group:AddToggle("Anti Lava Acid", {
@@ -8104,8 +8105,8 @@ game.Workspace["AntiLava"]["AntiAcid"].CanCollide = Value
 }):AddKeyPicker("AntiLavaAcid", {
    Default = "K",
    Text = "Anti Lava & Acid",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 Anti1Group:AddToggle("Anti Record", {
@@ -8118,8 +8119,8 @@ AntiRecord = Value
 }):AddKeyPicker("AntiRecord", {
    Default = "K",
    Text = "Anti Record",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 for i,p in pairs(game.Players:GetChildren()) do
 if p ~= game.Players.LocalPlayer then
@@ -8167,8 +8168,8 @@ end
 }):AddKeyPicker("AntiRagdoll", {
    Default = "K",
    Text = "Anti Ragdoll",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 Anti1Group:AddButton("Remove Not Safe", function()
@@ -8752,8 +8753,8 @@ end
 }):AddKeyPicker("Fly", {
    Default = "R",
    Text = "Fly",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 Misc1Group:AddButton("Teleport Rob Plushie", function()
@@ -9050,8 +9051,8 @@ end
 }):AddKeyPicker("Fly", {
    Default = "R",
    Text = "Fly",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 local Misc2Group = Tabs.Tab:AddRightGroupbox("Combat")
@@ -9084,8 +9085,8 @@ end
 }):AddKeyPicker("FightTrask", {
    Default = "V",
    Text = "Fight Trask",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 Misc2Group:AddToggle("Fight Boss Final", {
@@ -9116,8 +9117,8 @@ end
 }):AddKeyPicker("FightBossFinal", {
    Default = "V",
    Text = "Fight Boss Final",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 Misc2Group:AddToggle("Fight Replica", {
@@ -9148,8 +9149,8 @@ end
 }):AddKeyPicker("FightReplica", {
    Default = "V",
    Text = "Fight Replica",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 Misc2Group:AddToggle("Fight Golem", {
@@ -9195,8 +9196,8 @@ end
 }):AddKeyPicker("FightGolem", {
    Default = "V",
    Text = "Fight Golem",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 Misc2Group:AddToggle("Fight All", {
@@ -9225,8 +9226,8 @@ end
 }):AddKeyPicker("FightAll", {
    Default = "O",
    Text = "Fight All",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 
 Misc2Group:AddButton("Fight Potato", function()
@@ -9633,8 +9634,8 @@ end
 }):AddKeyPicker("Fly", {
    Default = "R",
    Text = "Fly",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 elseif game.PlaceId == 102908326578005 then
 local Window = Library:CreateWindow({
@@ -9889,8 +9890,8 @@ end
 }):AddKeyPicker("Fly", {
    Default = "R",
    Text = "Fly",
-   Mode = Library.IsMobile and "Toggle" or "Hold",
-   SyncToggleState = Library.IsMobile
+   Mode = "Toggle",
+   SyncToggleState = true
 })
 end
 
@@ -10087,6 +10088,7 @@ gloveHits = {
     ["Baby"] = game.ReplicatedStorage.GeneralHit,
     ["Stalker"] = game.ReplicatedStorage.GeneralHit,
     ["Angler"] = game.ReplicatedStorage.GeneralHit,
+    ["Jerry"] = game.ReplicatedStorage.GeneralHit,
     ------------------------------------------------------------------------
     ["ZZZZZZZ"] = game.ReplicatedStorage.ZZZZZZZHit,
     ["Brick"] = game.ReplicatedStorage.BrickHit,
