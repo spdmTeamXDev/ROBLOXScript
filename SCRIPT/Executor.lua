@@ -1113,6 +1113,33 @@ end
 end
 end)
 
+_G.Dex = {
+	["Workspace"] = true,
+	["InfoPart"] = false,
+	["InfoMeshPart"] = false
+}
+
+CreateToggle("Workspace", function(Value)
+for v in pairs(_G.Dex) do
+     _G.Dex[v] = false
+end
+_G.Dex["Workspace"] = Value
+end)
+
+CreateToggle("Info Part", function(Value)
+for v in pairs(_G.Dex) do
+     _G.Dex[v] = false
+end
+_G.Dex["InfoPart"] = Value
+end)
+
+CreateToggle("Info MeshPart", function(Value)
+for v in pairs(_G.Dex) do
+     _G.Dex[v] = false
+end
+_G.Dex["InfoMeshPart"] = Value
+end)
+
 ----// Save Script \\----
 
 makefolder("ExecuteGet/Script")
@@ -1324,6 +1351,7 @@ ButtonDelete.Parent = SaveLabel
 ButtonDelete.MouseButton1Click:Connect(function()
 CreateClear("Delete File?", function()
 delfile("ExecuteGet/"..SaveGet.Name)
+SaveLabel:Destroy()
 end)
 end)
 end
@@ -2665,7 +2693,7 @@ local TextBox = Instance.new("TextBox")
 TextBox.Size = UDim2.new(0.94, 0, 0.6, 0)
 TextBox.Position = UDim2.new(0.03, 0, 0.35, 0)
 TextBox.BackgroundColor3 = Color3.new(255,255,255)
-TextBox.Text = "Click target (Get Show, Turn On / OFF)"
+TextBox.Text = "Click target (Get Show, Turn On / OFF)\n Go to settings, scroll down to the bottom to turn off the necessary ones."
 TextBox.TextWrapped = true
 TextBox.ClipsDescendants = true
 TextBox.MultiLine = true
@@ -2676,6 +2704,7 @@ TextBox.Parent = Frame29
 
 game.Players.LocalPlayer:GetMouse().Button1Down:Connect(function()
     if _G.ToggleDex == true then
+       if _G.Dex["Workspace"] == true then
         if game.Players.LocalPlayer:GetMouse().Target and game.Players.LocalPlayer:GetMouse().Target:IsDescendantOf(workspace) then
             local Code = "game.Workspace"
             local Click = game.Players.LocalPlayer:GetMouse().Target
@@ -2699,11 +2728,71 @@ game.Players.LocalPlayer:GetMouse().Button1Down:Connect(function()
                     end
                 end
             end
-            TextBox.Text = Code
-        else
-            TextBox.Text = "No target"
-        end
+        TextBox.Text = Code
     end
+else
+if game.Players.LocalPlayer:GetMouse().Target and game.Players.LocalPlayer:GetMouse().Target:IsDescendantOf(workspace) then
+    local Click = game.Players.LocalPlayer:GetMouse().Target
+    if Click.ClassName == "Part" and _G.Dex["InfoPart"] == true or Click.ClassName == "MeshPart" and _G.Dex["InfoMeshPart"] == true then
+        local Code = Click
+        local Parts = {}
+        while Click and Click.Parent and Click.Parent ~= game do
+            table.insert(Parts, 1, Click.Name)
+            Click = Click.Parent
+        end
+        local CodeString = "game.Workspace"
+        for i, v in ipairs(Parts) do
+            if i == #Parts then
+                if string.find(v, " ") or string.find(v, "/") or string.find(v, "-") or string.find(v, "@") or string.find(v, "#") or string.find(v, "₫") or string.find(v, "&") or string.find(v, "+") or string.find(v, "*") or string.find(v, ":") or string.find(v, ";") or string.find(v, "!") or string.find(v, "?") or string.find(v, "€") or string.find(v, "£") or string.find(v, "~") then
+                    CodeString = CodeString..'["'..v..'"]'
+                else
+                    CodeString = CodeString.."."..v
+                end
+            else
+                if string.find(v, " ") or string.find(v, "/") or string.find(v, "-") or string.find(v, "@") or string.find(v, "#") or string.find(v, "₫") or string.find(v, "&") or string.find(v, "+") or string.find(v, "*") or string.find(v, ":") or string.find(v, ";") or string.find(v, "!") or string.find(v, "?") or string.find(v, "€") or string.find(v, "£") or string.find(v, "~") then
+                    CodeString = CodeString..'["'..v..'"]'
+                else
+                    CodeString = CodeString.."."..v
+                end
+            end
+        end
+     if _G.Dex["InfoPart"] == true then
+        TextBox.Text = 
+        "local "..Code.Name..' = Instance.new("Part", '..(CodeString:gsub("."..Code.Name, "") or "nil")..')\n'..
+        Code.Name..".Position = Vector3.new("..tostring(Code.Position)..")\n"..
+        Code.Name..".Name = "..'"'..Code.Name..'"\n'..
+        Code.Name..".Size = Vector3.new("..tostring(Code.Size)..")\n"..
+        Code.Name..".Orientation = Vector3.new("..tostring(Code.Orientation)..")\n"..
+        Code.Name..".Anchored = "..tostring(Code.Anchored).."\n"..
+        Code.Name..".CanCollide = "..tostring(Code.CanCollide).."\n"..
+        Code.Name..".Locked = "..tostring(Code.Locked).."\n"..
+        Code.Name..".Material = Enum.Material."..tostring(Code.Material).."\n"..
+        Code.Name..'.BrickColor = BrickColor.new("'..tostring(Code.BrickColor)..'")\n'..
+        Code.Name..".Transparency = "..tostring(Code.Transparency).."\n"..
+        Code.Name..".Reflectance = "..tostring(Code.Reflectance).."\n"..
+        Code.Name..".Color = Color3.new("..tostring(Code.Color)..")\n"..
+        Code.Name..".Shape = Enum.Material."..tostring(Code.Shape)..")\n"
+    elseif _G.Dex["InfoMeshPart"] == true then
+        TextBox.Text = 
+        "local "..Code.Name..' = Instance.new("MeshPart", '..(CodeString:gsub("."..Code.Name, "") or "nil")..')\n'..
+        Code.Name..".Position = Vector3.new("..tostring(Code.Position)..")\n"..
+        Code.Name..".Name = "..'"'..Code.Name..'"\n'..
+        Code.Name..".Size = Vector3.new("..tostring(Code.Size)..")\n"..
+        Code.Name..".Orientation = Vector3.new("..tostring(Code.Orientation)..")\n"..
+        Code.Name..'.MeshId = "'..Code.MeshId..'"\n'..
+        Code.Name..".Anchored = "..tostring(Code.Anchored).."\n"..
+        Code.Name..".CanCollide = "..tostring(Code.CanCollide).."\n"..
+        Code.Name..".Locked = "..tostring(Code.Locked).."\n"..
+        Code.Name..".Material = Enum.Material."..tostring(Code.Material).."\n"..
+        Code.Name..'.BrickColor = BrickColor.new("'..tostring(Code.BrickColor)..'")\n'..
+        Code.Name..".Transparency = "..tostring(Code.Transparency).."\n"..
+        Code.Name..".Reflectance = "..tostring(Code.Reflectance).."\n"..
+        Code.Name..".Color = Color3.new("..tostring(Code.Color)..")"
+    end
+end
+end
+end
+end
 end)
 
 ------// Shiftlock \\--------
@@ -2764,7 +2853,7 @@ ShiftLockButton.MouseButton1Click:Connect(function()
 
 ------// Auto Delete \\---------
 
-AutoDelete = game:GetService("RunService").RenderStepped:Connect(function()
+while true do
 if game.CoreGui:FindFirstChild("Execute") == nil then
 pcall(function()
 if Active then
@@ -2779,7 +2868,8 @@ AutoDelete = nil
 end
 end)
 end
-end)
+task.wait()
+end
 wait(0.7)
 for i,v in ipairs(listfiles("ExecuteGet")) do
 SavedScriptsAdd({Name = v:sub(12, #v), Script = readfile(v), true})
