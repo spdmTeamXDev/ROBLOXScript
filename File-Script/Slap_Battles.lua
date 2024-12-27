@@ -661,8 +661,8 @@ if _G.NotificationSound then
     
 if game.PlaceId == 6403373529 or game.PlaceId == 9015014224 or game.PlaceId == 11520107397 then
 local Window = Library:CreateWindow({
-	Title = "Article Hub - Slap Battles",
-	Center = true,
+    Title = "Article Hub - Slap Battles",
+    Center = true,
     AutoShow = true,
     Resizable = true,
     AutoLock = true,
@@ -7168,10 +7168,11 @@ Toggles["Anti Admin"]:SetValue(game.Workspace.NoChanged.Value)
 end)
 elseif game.PlaceId == 11828384869 then
 local Window = Library:CreateWindow({
-	Title = "Article Hub - Maze 👁️",
-	Center = true,
+    Title = "Article Hub - Maze 👁️",
+    Center = true,
     AutoShow = true,
     Resizable = true,
+    AutoLock = true,
     ShowCustomCursor = true,
     NotifySide = "Right",
     TabPadding = 2,
@@ -7223,6 +7224,7 @@ local Window = Library:CreateWindow({
 	Center = true,
     AutoShow = true,
     Resizable = true,
+    AutoLock = true,
     ShowCustomCursor = true,
     NotifySide = "Right",
     TabPadding = 2,
@@ -7510,6 +7512,7 @@ local Window = Library:CreateWindow({
 	Center = true,
     AutoShow = true,
     Resizable = true,
+    AutoLock = true,
     ShowCustomCursor = true,
     NotifySide = "Right",
     TabPadding = 2,
@@ -8652,6 +8655,7 @@ local Window = Library:CreateWindow({
 	Center = true,
     AutoShow = true,
     Resizable = true,
+    AutoLock = true,
     ShowCustomCursor = true,
     NotifySide = "Right",
     TabPadding = 2,
@@ -8773,6 +8777,7 @@ local Window = Library:CreateWindow({
 	Center = true,
     AutoShow = true,
     Resizable = true,
+    AutoLock = true,
     ShowCustomCursor = true,
     NotifySide = "Right",
     TabPadding = 2,
@@ -8873,6 +8878,7 @@ local Window = Library:CreateWindow({
 	Center = true,
     AutoShow = true,
     Resizable = true,
+    AutoLock = true,
     ShowCustomCursor = true,
     NotifySide = "Right",
     TabPadding = 2,
@@ -8902,6 +8908,7 @@ local Window = Library:CreateWindow({
 	Center = true,
     AutoShow = true,
     Resizable = true,
+    AutoLock = true,
     ShowCustomCursor = true,
     NotifySide = "Right",
     TabPadding = 2,
@@ -9373,6 +9380,7 @@ local Window = Library:CreateWindow({
 	Center = true,
     AutoShow = true,
     Resizable = true,
+    AutoLock = true,
     ShowCustomCursor = true,
     NotifySide = "Right",
     TabPadding = 2,
@@ -9478,6 +9486,7 @@ local Window = Library:CreateWindow({
 	Center = true,
     AutoShow = true,
     Resizable = true,
+    AutoLock = true,
     ShowCustomCursor = true,
     NotifySide = "Right",
     TabPadding = 2,
@@ -9509,6 +9518,7 @@ local Window = Library:CreateWindow({
 	Center = true,
     AutoShow = true,
     Resizable = true,
+    AutoLock = true,
     ShowCustomCursor = true,
     NotifySide = "Right",
     TabPadding = 2,
@@ -9635,6 +9645,7 @@ local Window = Library:CreateWindow({
 	Center = true,
     AutoShow = true,
     Resizable = true,
+    AutoLock = true,
     ShowCustomCursor = true,
     NotifySide = "Right",
     TabPadding = 2,
@@ -9683,6 +9694,7 @@ local Window = Library:CreateWindow({
 	Center = true,
     AutoShow = true,
     Resizable = true,
+    AutoLock = true,
     ShowCustomCursor = true,
     NotifySide = "Right",
     TabPadding = 2,
@@ -9705,6 +9717,7 @@ local Window = Library:CreateWindow({
 	Center = true,
     AutoShow = true,
     Resizable = true,
+    AutoLock = true,
     ShowCustomCursor = true,
     NotifySide = "Right",
     TabPadding = 2,
@@ -9735,10 +9748,11 @@ end
 })
 elseif game.PlaceId == 95706409702231 then
 local Window = Library:CreateWindow({
-	Title = "Article Hub - Jerry Boss",
-	Center = true,
+    Title = "Article Hub - Jerry Boss",
+    Center = true,
     AutoShow = true,
     Resizable = true,
+    AutoLock = true,
     ShowCustomCursor = true,
     NotifySide = "Right",
     TabPadding = 2,
@@ -9768,9 +9782,7 @@ end
 while _G.JerryDie do
 for i,v in pairs(workspace:GetChildren()) do
 if v.Name == "Boss" and v:FindFirstChild("Humanoid") then
-v.Humanoid.MaxHealth = 0
 v.Humanoid.Health = 0
-v.Humanoid.Sit = true
 end
 end
 for i,v in pairs(workspace:GetChildren()) do
