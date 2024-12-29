@@ -3935,10 +3935,10 @@ for i,v in pairs(game.Players:GetChildren()) do
 if v ~= game.Players.LocalPlayer and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and v.Character then
 if game.Players.LocalPlayer.Character:FindFirstChild("entered") and v.Character:FindFirstChild("entered") and v.Character:FindFirstChild("HumanoidRootPart") and v.Character:FindFirstChild("stevebody") == nil and v.Character:FindFirstChild("rock") == nil and v.Character.HumanoidRootPart.BrickColor ~= BrickColor.new("New Yeller") and v.Character.Ragdolled.Value == false and v.Character:FindFirstChild("Mirage") == nil then
 if game.Workspace:FindFirstChild("Union") then
-v.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(-5, 0, 0)
+v.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(-10, 0, 0)
 for i, a in pairs(game.Workspace:GetChildren()) do
         if a.Name == "Union" then
-           a.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(-5, 0, 0)
+           a.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(-10, 0, 0)
         end
     end
 end
@@ -3946,6 +3946,22 @@ end
 end
 end
 task.wait(0.1)
+end
+    end
+})
+
+Misc1Basic:AddToggle("Brick Orbit", {
+    Text = "Brick Orbit",
+    Default = false, 
+    Callback = function(Value) 
+_G.BrickOrbit = Value
+while _G.BrickOrbit do
+for i, a in pairs(game.Workspace:GetChildren()) do
+        if a.Name == "Union" then
+           a.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(math.cos(tick() * 5 + (i - 1) * math.pi / 5) * 8, 0, math.sin(tick() * 5 + (i - 1) * math.pi / 5) * 8)
+        end
+    end
+task.wait()
 end
     end
 })
@@ -6403,77 +6419,13 @@ _G.ExtendPingPong = Value
     end
 })
 
-Glove2Group:AddToggle("PingPongOrbit", {
-    Text = "Ping Pong Orbit",
-    Default = false, 
-    Callback = function(Value) 
-_G.PingPongOrbit = Value
-if game.Players.LocalPlayer.leaderstats.Glove.Value == "Ping Pong" then
-game.Players.LocalPlayer.Character.Torso.RadioPart.Rotation = game.Players.LocalPlayer.Character.HumanoidRootPart.Rotation
-Orbit = "0"
-if OrbitSpeed == nil then
-OrbitSpeed = 1
-end
-PingPongBall = game.Players.LocalPlayer.Name.."_PingPongBall"
-while _G.PingPongOrbit do
-game:GetService("ReplicatedStorage").GeneralAbility:FireServer()
-Orbit = Orbit + OrbitSpeed
-game.Players.LocalPlayer.Character.Torso.RadioPart.Rotation = Vector3.new(-180, Orbit, -180)
-if game.Players.LocalPlayer.Character.Torso.RadioPart:GetChildren()[2] then
-for i,v in pairs(game.Workspace:GetChildren()) do
-                    if v.ClassName == "Part" and v.Name == PingPongBall then
-v.CFrame = game.Players.LocalPlayer.Character.Torso.RadioPart.CFrame * CFrame.new(0,0,-_G.ExtendPingPong) * CFrame.Angles(math.rad(0), math.rad(-90), math.rad(0))
-                    end
-                end
-for i,v in pairs(game.Players.LocalPlayer.Character.Torso.RadioPart:GetChildren()) do
-                    if v.ClassName == "Part" and v.Name == PingPongBall then
-                        v.CFrame = game.Players.LocalPlayer.Character.Torso.RadioPart.CFrame * CFrame.new(0,0,_G.ExtendPingPong) * CFrame.Angles(math.rad(0), math.rad(90), math.rad(0))
-                    end
-                end
-elseif game.Players.LocalPlayer.Character.Torso.RadioPart:GetChildren()[1] or game.Players.LocalPlayer.Character.Torso.RadioPart:GetChildren()[2] then
-for i,v in pairs(game.Workspace:GetChildren()) do
-                    if v.ClassName == "Part" and v.Name == PingPongBall then
-v.Parent = game.Players.LocalPlayer.Character.Torso.RadioPart
-break
-                    end
-                end
-end
-task.wait(0.01)
-end
-elseif Value == true then
-Notification("You don't have Ping Pong equipped.", 5)
-wait(0.05)
-Toggles["PingPongOrbit"]:SetValue(false)
-end
-    end
-})
-
-Glove2Group:AddToggle("PingPongFling", {
-    Text = "Ping Pong Fling",
-    Default = false, 
-    Callback = function(Value) 
-_G.PingPongFlingAll = Value
-if game.Players.LocalPlayer.leaderstats.Glove.Value == "Ping Pong" then
-while _G.PingPongFlingAll do
-game:GetService("ReplicatedStorage").GeneralAbility:FireServer()
-for i, v in pairs(game.Players:GetPlayers()) do
-if v ~= game.Players.LocalPlayer and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and v.Character then
-if v.Character:FindFirstChild("entered") and v.Character:FindFirstChild("HumanoidRootPart") and v.Character:FindFirstChild("stevebody") == nil and v.Character:FindFirstChild("rock") == nil and v.Character.HumanoidRootPart.BrickColor ~= BrickColor.new("New Yeller") and v.Character.Ragdolled.Value == false and v.Character:FindFirstChild("Mirage") == nil then
-for i,a in pairs(game.Workspace:GetChildren()) do
-                    if a.Name == (game.Players.LocalPlayer.Name.."_PingPongBall") then
-a.CFrame = v.Character.HumanoidRootPart.CFrame
-                    end
-                end
-end
-end
-end
-task.wait(0.01)
-end
-elseif Value == true then
-Notification("You don't have Ping Pong equipped.", 5)
-wait(0.05)
-Toggles["PingPongFling"]:SetValue(false)
-end
+Glove2Group:AddDropdown("Ping Pong Choose", {
+    Text = "Ping Pong",
+    Values = {"Fling", "Fling Player", "Orbit", "Orbit Player"},
+    Default = "",
+    Multi = false,
+    Callback = function(Value)
+_G.PingPongServer = Value
     end
 })
 
@@ -6499,39 +6451,82 @@ end
     end
 })
 
-Glove2Group:AddSlider("ExtendPingPongPlayer", {
-    Text = "Extend Ping Pong Player",
-    Default = 0,
-    Min = -100,
-    Max = 100,
-    Rounding = 1,
-    Compact = true,
-    Callback = function(Value)
-_G.ExtendPingPongPlayer = Value
-    end
-})
-
-Glove2Group:AddToggle("PingPongPlayer", {
-    Text = "Ping Pong Player",
+Glove2Group:AddToggle("PingPongOrbit", {
+    Text = "Ping Pong Orbit",
     Default = false, 
-    Callback = function(Value)
-_G.PingPongFlingPlayer = Value
+    Callback = function(Value) 
+_G.PingPongServerBr = Value
 if game.Players.LocalPlayer.leaderstats.Glove.Value == "Ping Pong" then
-while _G.PingPongFlingPlayer do
+PingPongBall = game.Players.LocalPlayer.Name.."_PingPongBall"
+if _G.PingPongServer == "Orbit" then
+Orbit = "0"
+if OrbitSpeed == nil then
+OrbitSpeed = 1
+end
+game.Players.LocalPlayer.Character.Torso.RadioPart.Rotation = game.Players.LocalPlayer.Character.HumanoidRootPart.Rotation
+end
+while _G.PingPongServerBr do
+if _G.PingPongServer == "Orbit" then
+game:GetService("ReplicatedStorage").GeneralAbility:FireServer()
+Orbit = Orbit + OrbitSpeed
+game.Players.LocalPlayer.Character.Torso.RadioPart.Rotation = Vector3.new(-180, Orbit, -180)
+if game.Players.LocalPlayer.Character.Torso.RadioPart:GetChildren()[2] then
+for i,v in pairs(game.Workspace:GetChildren()) do
+                    if v.ClassName == "Part" and v.Name == PingPongBall then
+v.CFrame = game.Players.LocalPlayer.Character.Torso.RadioPart.CFrame * CFrame.new(0,0,-_G.ExtendPingPong) * CFrame.Angles(math.rad(0), math.rad(-90), math.rad(0))
+                    end
+                end
+for i,v in pairs(game.Players.LocalPlayer.Character.Torso.RadioPart:GetChildren()) do
+                    if v.ClassName == "Part" and v.Name == PingPongBall then
+                        v.CFrame = game.Players.LocalPlayer.Character.Torso.RadioPart.CFrame * CFrame.new(0,0,_G.ExtendPingPong) * CFrame.Angles(math.rad(0), math.rad(90), math.rad(0))
+                    end
+                end
+elseif game.Players.LocalPlayer.Character.Torso.RadioPart:GetChildren()[1] or game.Players.LocalPlayer.Character.Torso.RadioPart:GetChildren()[2] then
+for i,v in pairs(game.Workspace:GetChildren()) do
+                    if v.ClassName == "Part" and v.Name == PingPongBall then
+v.Parent = game.Players.LocalPlayer.Character.Torso.RadioPart
+break
+                    end
+                end
+end
+elseif _G.PingPongServer == "Orbit Player" then
 game:GetService("ReplicatedStorage").GeneralAbility:FireServer()
 if game.Players[_G.PlayerButton2].Character and game.Players[_G.PlayerButton2].Character:WaitForChild("Ragdolled").Value == false then
 for i,v in pairs(game.Workspace:GetChildren()) do
                     if v.Name == (game.Players.LocalPlayer.Name.."_PingPongBall") then
-v.CFrame = game.Players[_G.PlayerButton2].Character.HumanoidRootPart.CFrame * CFrame.new(0,0,_G.ExtendPingPongPlayer)
+v.CFrame = game.Players[_G.PlayerButton2].Character.HumanoidRootPart.CFrame * CFrame.new(math.cos(tick() * OrbitSpeed + (i - 1) * math.pi / 2) * _G.ExtendPingPong, 0, math.sin(tick() * OrbitSpeed + (i - 1) * math.pi / 2) * _G.ExtendPingPong)
                     end
                 end
 end
-task.wait()
+elseif _G.PingPongServer == "Fling" then
+game:GetService("ReplicatedStorage").GeneralAbility:FireServer()
+for i, v in pairs(game.Players:GetPlayers()) do
+if v ~= game.Players.LocalPlayer and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and v.Character then
+if v.Character:FindFirstChild("entered") and v.Character:FindFirstChild("HumanoidRootPart") and v.Character:FindFirstChild("stevebody") == nil and v.Character:FindFirstChild("rock") == nil and v.Character.HumanoidRootPart.BrickColor ~= BrickColor.new("New Yeller") and v.Character.Ragdolled.Value == false and v.Character:FindFirstChild("Mirage") == nil then
+for i,a in pairs(game.Workspace:GetChildren()) do
+                    if a.Name == (game.Players.LocalPlayer.Name.."_PingPongBall") then
+a.CFrame = v.Character.HumanoidRootPart.CFrame
+                    end
+                end
+end
+end
+end
+elseif _G.PingPongServer == "Fling Player" then
+game:GetService("ReplicatedStorage").GeneralAbility:FireServer()
+if game.Players[_G.PlayerButton2].Character and game.Players[_G.PlayerButton2].Character:WaitForChild("Ragdolled").Value == false then
+for i,v in pairs(game.Workspace:GetChildren()) do
+                    if v.Name == (game.Players.LocalPlayer.Name.."_PingPongBall") then
+v.CFrame = game.Players[_G.PlayerButton2].Character.HumanoidRootPart.CFrame
+                    end
+                end
+end
+end
+task.wait(0.01)
 end
 elseif Value == true then
 Notification("You don't have Ping Pong equipped.", 5)
 wait(0.05)
-Toggles["PingPongPlayer"]:SetValue(false)
+Toggles["PingPongOrbit"]:SetValue(false)
 end
     end
 })
