@@ -6451,8 +6451,8 @@ end
     end
 })
 
-Glove2Group:AddToggle("PingPongOrbit", {
-    Text = "Ping Pong Orbit",
+Glove2Group:AddToggle("PingPong", {
+    Text = "Ping Pong",
     Default = false, 
     Callback = function(Value) 
 _G.PingPongServerBr = Value
