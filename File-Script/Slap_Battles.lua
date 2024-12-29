@@ -6526,7 +6526,7 @@ end
 elseif Value == true then
 Notification("You don't have Ping Pong equipped.", 5)
 wait(0.05)
-Toggles["PingPongOrbit"]:SetValue(false)
+Toggles["PingPong"]:SetValue(false)
 end
     end
 })
