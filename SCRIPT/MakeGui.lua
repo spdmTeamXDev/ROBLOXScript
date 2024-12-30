@@ -130,7 +130,7 @@ TextLabel.Position = UDim2.new(0, 0, 0.018, 0)
 TextLabel.BackgroundColor3 = Color3.new(0, 0, 0)
 TextLabel.BorderColor3 = Color3.new(0, 0, 0)
 TextLabel.BorderSizePixel = 1
-TextLabel.Text = "Article Hub - Make Gui 🛠️"
+TextLabel.Text = "Article Hub - Make Gui "
 TextLabel.BackgroundTransparency = 1
 TextLabel.TextColor3 = Color3.new(255, 255, 255)
 TextLabel.FontFace = Font.new("rbxasset://fonts/families/TitilliumWeb.json", Enum.FontWeight.Bold, Enum.FontStyle.Normal)
@@ -942,8 +942,9 @@ game.CoreGui["Article GUI"].EditFrame.Frame.TextBoxCopy.Text = "Nah, id win"
 end)
 end)
 
+_G.DraggableFrame = true
 TextButtonNew("Draggable (On)",  {
-	  Name = "DraggableFrameGet",
+          Name = "DraggableFrameGet",
       Size = UDim2.new(0.29, 0, 0.1, 0),
       Po = UDim2.new(0.41, 0, 0.864, 0),
       SizeTex = 14,
@@ -1044,13 +1045,15 @@ TextButtonNew("Corner (–)",  {
       Parent = Frame,
       FontFaceButton = Font.new("rbxasset://fonts/families/Arial.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
 }, function()
+if game.CoreGui["Article GUI"].EditFrame1.Corner.CornerRadius.Offset ~= 0 then
 game.CoreGui["Article GUI"].EditFrame1.Corner.CornerRadius = UDim.new(0, game.CoreGui["Article GUI"].EditFrame1.Corner.CornerRadius.Offset - _G.Corner)
-game.CoreGui["Article GUI"].EditFrame.Frame.TextBoxCopy.Text = string.format("Position: (%d, %d)\nSize: (%d, %d)\nCorner: %d", 
+game.CoreGui["Article GUI"].EditFrame.Frame.TextBoxCopy.Text = string.format("Position: (0.5, %d, 0.5, %d)\nSize: (0, %d, 0, %d)\nCorner: (0, %d)", 
         game.CoreGui["Article GUI"].EditFrame1.Position.X.Offset, 
         game.CoreGui["Article GUI"].EditFrame1.Position.Y.Offset, 
         game.CoreGui["Article GUI"].EditFrame1.Size.X.Offset, 
         game.CoreGui["Article GUI"].EditFrame1.Size.Y.Offset, 
         game.CoreGui["Article GUI"].EditFrame1.Corner.CornerRadius.Offset)
+end
 end)
 
 TextButtonNew("Corner (+)",  {
@@ -1062,7 +1065,7 @@ TextButtonNew("Corner (+)",  {
       FontFaceButton = Font.new("rbxasset://fonts/families/Arial.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
 }, function()
 game.CoreGui["Article GUI"].EditFrame1.Corner.CornerRadius = UDim.new(0, game.CoreGui["Article GUI"].EditFrame1.Corner.CornerRadius.Offset + _G.Corner)
-game.CoreGui["Article GUI"].EditFrame.Frame.TextBoxCopy.Text = string.format("Position: (%d, %d)\nSize: (%d, %d)\nCorner: %d", 
+game.CoreGui["Article GUI"].EditFrame.Frame.TextBoxCopy.Text = string.format("Position: (0.5, %d, 0.5, %d)\nSize: (0, %d, 0, %d)\nCorner: (0, %d)", 
         game.CoreGui["Article GUI"].EditFrame1.Position.X.Offset, 
         game.CoreGui["Article GUI"].EditFrame1.Position.Y.Offset, 
         game.CoreGui["Article GUI"].EditFrame1.Size.X.Offset, 
@@ -1088,8 +1091,6 @@ TextBox.TextColor3 = Color3.new(0,0,0)
 TextBox.BackgroundTransparency = 0
 TextBox.TextSize = TextBox1.SizeText
 TextBox.ClearTextOnFocus = false
-TextBox.ClipsDescendants = true
-TextBox.MultiLine = true
 TextBox.TextWrapped = true
 TextBox.Parent = Frame
 TextBox.FocusLost:Connect(function(enterPressed)
@@ -1105,6 +1106,7 @@ end
 
 _G.SizeFrame = 10
 TextBoxNew({
+	Name = "TextBoxSizeFrame",
     Text = "Size\nFrame",
     Size = UDim2.new(0.2, 0, 0.44, 0),
     Po = UDim2.new(0.35, 0, 0.05, 0),
@@ -1115,6 +1117,7 @@ end)
 
 _G.Corner = 5
 TextBoxNew({
+	Name = "TextBoxCorner",
     Text = "Corner\nUi",
     Size = UDim2.new(0.2, 0, 0.44, 0),
     Po = UDim2.new(0.35, 0, 0.5, 0),
@@ -1124,8 +1127,8 @@ TextBoxNew({
 end)
 
 TextBoxNew({
-	Name = "TextBoxCopy",
-    Text = "Nah, id win",
+    Name = "TextBoxCopy",
+    Text = "",
     Size = UDim2.new(0.42, 0, 0.9, 0),
     Po = UDim2.new(0.56, 0, 0.05, 0),
     SizeText = 17
@@ -1138,6 +1141,7 @@ Frame.Name = "EditFrame1"
 Frame.Size = UDim2.new(0, 200, 0, 200)
 Frame.Position = UDim2.new(0.5, -100, 0.5, -100)
 Frame.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+Frame.BackgroundTransparency = 0.37
 Frame.Visible = false
 Frame.Parent = gui
 
@@ -1154,7 +1158,12 @@ local startPos
 local function update(input)
     local delta = input.Position - dragStart
     Frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-    game.CoreGui["Article GUI"].EditFrame.Frame.TextBoxCopy.Text = string.format("Position: (%d, %d)\nSize: (%d, %d)\nCorner: %d", Frame.Position.X.Offset, Frame.Position.Y.Offset, Frame.Size.X.Offset, Frame.Size.Y.Offset, Corner.CornerRadius.Offset)
+    game.CoreGui["Article GUI"].EditFrame.Frame.TextBoxCopy.Text = string.format("Position: (0.5, %d, 0.5, %d)\nSize: (0, %d, 0, %d)\nCorner: (0, %d)", 
+        Frame.Position.X.Offset, 
+        Frame.Position.Y.Offset, 
+        Frame.Size.X.Offset, 
+        Frame.Size.Y.Offset, 
+        Corner.CornerRadius.Offset)
 end
 
 Frame.InputBegan:Connect(function(input)
@@ -1189,11 +1198,20 @@ if _G.DraggableFrame == true then
 end
 end)
 
-game.CoreGui["Article GUI"].EditFrame.Frame.TextBoxCopy.Text = string.format("Position: (%d, %d)\nSize: (%d, %d)\nCorner: %d", Frame.Position.X.Offset, Frame.Position.Y.Offset, Frame.Size.X.Offset, Frame.Size.Y.Offset, Corner.CornerRadius.Offset)
 Frame:GetPropertyChangedSignal("Position"):Connect(function()
-game.CoreGui["Article GUI"].EditFrame.Frame.TextBoxCopy.Text = string.format("Position: (%d, %d)\nSize: (%d, %d)\nCorner: %d", Frame.Position.X.Offset, Frame.Position.Y.Offset, Frame.Size.X.Offset, Frame.Size.Y.Offset, Corner.CornerRadius.Offset)
+game.CoreGui["Article GUI"].EditFrame.Frame.TextBoxCopy.Text = string.format("Position: (0.5, %d, 0.5, %d)\nSize: (0, %d, 0, %d)\nCorner: (0, %d)", 
+        Frame.Position.X.Offset, 
+        Frame.Position.Y.Offset, 
+        Frame.Size.X.Offset, 
+        Frame.Size.Y.Offset, 
+        Corner.CornerRadius.Offset)
 end)
 Frame:GetPropertyChangedSignal("Size"):Connect(function()
-game.CoreGui["Article GUI"].EditFrame.Frame.TextBoxCopy.Text = string.format("Position: (%d, %d)\nSize: (%d, %d)\nCorner: %d", Frame.Position.X.Offset, Frame.Position.Y.Offset, Frame.Size.X.Offset, Frame.Size.Y.Offset, Corner.CornerRadius.Offset)
+game.CoreGui["Article GUI"].EditFrame.Frame.TextBoxCopy.Text = string.format("Position: (0.5, %d, 0.5, %d)\nSize: (0, %d, 0, %d)\nCorner: (0, %d)", 
+        Frame.Position.X.Offset, 
+        Frame.Position.Y.Offset, 
+        Frame.Size.X.Offset, 
+        Frame.Size.Y.Offset, 
+        Corner.CornerRadius.Offset)
 end)
 end
