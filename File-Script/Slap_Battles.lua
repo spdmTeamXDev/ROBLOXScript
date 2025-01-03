@@ -9756,7 +9756,7 @@ Tabs = {
 	["UI Settings"] = Window:AddTab("UI Settings", "rbxassetid://7733955511")
 }
 
-local Misc2Group = Tabs.Tab:AddLeftGroupbox("Anti")
+local Misc2Group = Tabs.Tab:AddLeftGroupbox("Badge")
 
 Misc2Group:AddButton("Teleport Badge", function()
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.rooms["room exit"].EXIT.CFrame
