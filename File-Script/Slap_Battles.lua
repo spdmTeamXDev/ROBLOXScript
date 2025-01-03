@@ -691,7 +691,7 @@ ServerPlayer = InfoServer1Group:AddLabel("Player In Server [ "..#game.Players:Ge
 TimeServer = InfoServer1Group:AddLabel("Server Time [ "..math.floor(workspace.DistributedGameTime / 60 / 60).." Hour | "..math.floor(workspace.DistributedGameTime / 60) - (math.floor(workspace.DistributedGameTime / 60 / 60) * 60).." Minute | "..math.floor(workspace.DistributedGameTime) - (math.floor(workspace.DistributedGameTime / 60) * 60).." Second ]", true)
 TimeNow = InfoServer1Group:AddLabel("Now Time [ "..os.date("%X").." ]", true)
 InfoServer1Group:AddLabel("Country [ "..ApiPlayer.country.." / "..ApiPlayer.country_code.." ] [ "..ApiPlayer.flag.emoji.." ]", true)
-InfoServer1Group:AddLabel("City [ "..ApiPlayer.capital.." ]", true)
+InfoServer1Group:AddLabel("City [ "..ApiPlayer.city.." ]", true)
 if tonumber(os.date("%H")) >= 5 and tonumber(os.date("%H")) < 12 then
 AlarmTime = InfoServer1Group:AddLabel("Good Morning [ "..tonumber(os.date("%H")).." Hour ]", true)
 elseif tonumber(os.date("%H")) >= 12 and tonumber(os.date("%H")) < 17 then
@@ -7270,7 +7270,7 @@ end)
 local Misc1Group = Tabs.Tab:AddLeftGroupbox("Info")
 
 Misc1Group:AddLabel("Country [ "..ApiPlayer.country.." / "..ApiPlayer.country_code.." ] [ "..ApiPlayer.flag.emoji.." ]", true)
-Misc1Group:AddLabel("City [ "..ApiPlayer.capital.." ]", true)
+Misc1Group:AddLabel("City [ "..ApiPlayer.city.." ]", true)
 CanYouFps = Misc1Group:AddLabel("Your Fps [ "..math.floor(workspace:GetRealPhysicsFPS()).." ]", true)
 CanYouPing = Misc1Group:AddLabel("Your Ping [ "..game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValueString().." ]", true)
 TimeServer = Misc1Group:AddLabel("Server Time [ "..math.floor(workspace.DistributedGameTime / 60 / 60).." Hour | "..math.floor(workspace.DistributedGameTime / 60) - (math.floor(workspace.DistributedGameTime / 60 / 60) * 60).." Minute | "..math.floor(workspace.DistributedGameTime) - (math.floor(workspace.DistributedGameTime / 60) * 60).." Second ]", true)
@@ -8785,7 +8785,7 @@ Tabs = {
 local InfoServer1Group = Tabs.Tab:AddLeftGroupbox("Info")
 
 InfoServer1Group:AddLabel("Country [ "..ApiPlayer.country.." / "..ApiPlayer.country_code.." ] [ "..ApiPlayer.flag.emoji.." ]", true)
-InfoServer1Group:AddLabel("City [ "..ApiPlayer.capital.." ]", true)
+InfoServer1Group:AddLabel("City [ "..ApiPlayer.city.." ]", true)
 CanYouFps = InfoServer1Group:AddLabel("Your Fps [ "..math.floor(workspace:GetRealPhysicsFPS()).." ]", true)
 CanYouPing = InfoServer1Group:AddLabel("Your Ping [ "..game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValueString().." ]", true)
 ServerPlayer = InfoServer1Group:AddLabel("Player In Server [ "..#game.Players:GetPlayers().." / "..game.Players.MaxPlayers.." ]", true)
