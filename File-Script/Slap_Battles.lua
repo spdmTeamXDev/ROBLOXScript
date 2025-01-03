@@ -690,13 +690,8 @@ CanYouPing = InfoServer1Group:AddLabel("Your Ping [ "..game:GetService("Stats").
 ServerPlayer = InfoServer1Group:AddLabel("Player In Server [ "..#game.Players:GetPlayers().." / "..game.Players.MaxPlayers.." ]", true)
 TimeServer = InfoServer1Group:AddLabel("Server Time [ "..math.floor(workspace.DistributedGameTime / 60 / 60).." Hour | "..math.floor(workspace.DistributedGameTime / 60) - (math.floor(workspace.DistributedGameTime / 60 / 60) * 60).." Minute | "..math.floor(workspace.DistributedGameTime) - (math.floor(workspace.DistributedGameTime / 60) * 60).." Second ]", true)
 TimeNow = InfoServer1Group:AddLabel("Now Time [ "..os.date("%X").." ]", true)
-if ApiPlayer.country == "Vietnam" and ApiPlayer.country_code == "VN" and ApiPlayer.city == "Hanoi" then
-InfoServer1Group:AddLabel("Country [ Việt Nam / VN ] [ "..ApiPlayer.flag.emoji.." ]", true)
-InfoServer1Group:AddLabel("City [ Hà Nội ]", true)
-else
 InfoServer1Group:AddLabel("Country [ "..ApiPlayer.country.." / "..ApiPlayer.country_code.." ] [ "..ApiPlayer.flag.emoji.." ]", true)
-InfoServer1Group:AddLabel("City [ "..ApiPlayer.city.." ]", true)
-end
+InfoServer1Group:AddLabel("City [ "..ApiPlayer.capital.." ]", true)
 if tonumber(os.date("%H")) >= 5 and tonumber(os.date("%H")) < 12 then
 AlarmTime = InfoServer1Group:AddLabel("Good Morning [ "..tonumber(os.date("%H")).." Hour ]", true)
 elseif tonumber(os.date("%H")) >= 12 and tonumber(os.date("%H")) < 17 then
@@ -5002,7 +4997,9 @@ else
 Notification("You have in Lobby | Player [ ".._G.PlayerPut1.." ] in arena, or You don't have Glitch equipped, or you have don't have 50K Slap", 5)
 end
 end
-end):AddButton("Help Quake", function()
+end)
+
+Misc3Group:AddButton("Help Player Quake", function()
 if game.Players.LocalPlayer.leaderstats.Glove.Value == "Home Run" and game.Players.LocalPlayer.Character:FindFirstChild("entered") == nil and game.Players[_G.PlayerPut1].leaderstats.Glove.Value == "Berserk" then
 game:GetService("ReplicatedStorage").HomeRun:FireServer({["start"] = true})
 fireclickdetector(workspace.Lobby.woah.ClickDetector)
@@ -5025,9 +5022,7 @@ Misc3Group:AddButton("Help Player Goofy", function()
 if game.Players.LocalPlayer.leaderstats.Glove.Value == "Confusion" and game.Players.LocalPlayer.Character:FindFirstChild("entered") == nil and game:GetService("BadgeService"):UserHasBadgeAsync(game.Players.LocalPlayer.UserId, 2133016756) then
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[_G.PlayerPut1].Character.HumanoidRootPart.CFrame
 wait(0.2)
-if 30 >= (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - game.Players[_G.PlayerPut1].Character.HumanoidRootPart.Position).Magnitude then
 game:GetService("ReplicatedStorage"):WaitForChild("GeneralHit"):FireServer(game.Players[_G.PlayerPut1].Character:WaitForChild("HumanoidRootPart"))
-end
 fireclickdetector(workspace.Lobby.Goofy.ClickDetector)
 wait(2)
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[_G.PlayerPut1].Character.HumanoidRootPart.CFrame
@@ -5415,7 +5410,7 @@ DivebombExplosion = game.Players.LocalPlayer.Name
 end
 _G.DivebombSpam = Value
 if game.Players.LocalPlayer.leaderstats.Glove.Value == "Divebomb" then
-while _G.DivebombSpam and game.Players.LocalPlayer.leaderstats.Glove.Value == "Divebomb" do
+while _G.DivebombSpam do
 game:GetService("ReplicatedStorage").RocketJump:InvokeServer({["chargeAlpha"] = 100,["rocketJump"] = true})
 game:GetService("ReplicatedStorage").RocketJump:InvokeServer({["position"] = game.Players[DivebombExplosion].Character.HumanoidRootPart.Position,["explosion"] = true,["explosionAlpha"] = _G.ChargeExplosion})
 task.wait()
@@ -5658,7 +5653,9 @@ else
 Notification("You don't have Swapper equipped, or you aren't in the arena.", 5)
 end
 end
-end):AddButton("HomeRun Player", function()
+end)
+
+Glove1Group:AddButton("HomeRun Player", function()
 if _G.PlayerChoose == "Username" then
 if game.Players.LocalPlayer.leaderstats.Glove.Value == "Home Run" and game.Players[_G.PlayerButton].Character:FindFirstChild("entered") then
 OGL = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
@@ -5737,7 +5734,9 @@ else
 Notification("You don't have Hive equipped", 5)
 end
 end
-end):AddButton("Quake Player", function()
+end)
+
+Glove1Group:AddButton("Quake Player", function()
 if _G.PlayerChoose == "Username" then
 if game.Players.LocalPlayer.leaderstats.Glove.Value == "Quake" and game.Players.LocalPlayer.Character:FindFirstChild("entered") and game.Players[_G.PlayerButton].Character:FindFirstChild("entered") then
 game.Players.LocalPlayer.Character.Humanoid:UnequipTools()
@@ -5820,7 +5819,9 @@ end
 else
 Notification("You don't have Recall equipped or you haven't in arena or you have equip Backpack Recall.", 5)
 end
-end):AddButton("Grab Player Teleport", function()
+end)
+
+Glove1Group:AddButton("Grab Player Teleport", function()
 if game.Players.LocalPlayer.leaderstats.Glove.Value == "Grab" and game.Players.LocalPlayer.Character:FindFirstChild("entered") and game.Players[_G.PlayerButton].Character:FindFirstChild("entered") then
 if _G.TeleportOldPlace == "Yes" then
 OLG = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
@@ -5941,7 +5942,9 @@ else
 Notification("You don't have Recall equipped, or you have Backpack Recall equipped, or player not enter arena", 5)
 end
 end
-end):AddButton("Za Hando", function()
+end)
+
+Glove1Group:AddButton("Kick Player Za Hando", function()
 if game.Players.LocalPlayer.leaderstats.Glove.Value == "Za Hando" then
 OGWS = game.Players.LocalPlayer.Character.Humanoid.WalkSpeed
 OGJP = game.Players.LocalPlayer.Character.Humanoid.JumpPower
@@ -6264,7 +6267,7 @@ while _G.InfinityPillow do
 game:GetService("ReplicatedStorage").Events.PillowEvent:FireServer("AddPillow")
 task.wait()
 end
-elseif _G.InfinityPillow == false then
+elseif _G.InfinityPillow == true then
 Notification("You don't have Pillow equipped", 5)
 wait(0.05)
 Toggles["Infinity Pillow"]:SetValue(false)
@@ -7266,13 +7269,8 @@ end)
 
 local Misc1Group = Tabs.Tab:AddLeftGroupbox("Info")
 
-if ApiPlayer.country == "Vietnam" and ApiPlayer.country_code == "VN" and ApiPlayer.city == "Hanoi" then
-Misc1Group:AddLabel("Country [ Việt Nam / VN ] [ "..ApiPlayer.flag.emoji.." ]", true)
-Misc1Group:AddLabel("City [ Hà Nội ]", true)
-else
 Misc1Group:AddLabel("Country [ "..ApiPlayer.country.." / "..ApiPlayer.country_code.." ] [ "..ApiPlayer.flag.emoji.." ]", true)
-Misc1Group:AddLabel("City [ "..ApiPlayer.city.." ]", true)
-end
+Misc1Group:AddLabel("City [ "..ApiPlayer.capital.." ]", true)
 CanYouFps = Misc1Group:AddLabel("Your Fps [ "..math.floor(workspace:GetRealPhysicsFPS()).." ]", true)
 CanYouPing = Misc1Group:AddLabel("Your Ping [ "..game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValueString().." ]", true)
 TimeServer = Misc1Group:AddLabel("Server Time [ "..math.floor(workspace.DistributedGameTime / 60 / 60).." Hour | "..math.floor(workspace.DistributedGameTime / 60) - (math.floor(workspace.DistributedGameTime / 60 / 60) * 60).." Minute | "..math.floor(workspace.DistributedGameTime) - (math.floor(workspace.DistributedGameTime / 60) * 60).." Second ]", true)
@@ -8786,13 +8784,8 @@ Tabs = {
 
 local InfoServer1Group = Tabs.Tab:AddLeftGroupbox("Info")
 
-if ApiPlayer.country == "Vietnam" and ApiPlayer.country_code == "VN" and ApiPlayer.city == "Hanoi" then
-InfoServer1Group:AddLabel("Country [ Việt Nam / VN ] [ "..ApiPlayer.flag.emoji.." ]", true)
-InfoServer1Group:AddLabel("City [ Hà Nội ]", true)
-else
 InfoServer1Group:AddLabel("Country [ "..ApiPlayer.country.." / "..ApiPlayer.country_code.." ] [ "..ApiPlayer.flag.emoji.." ]", true)
-InfoServer1Group:AddLabel("City [ "..ApiPlayer.city.." ]", true)
-end
+InfoServer1Group:AddLabel("City [ "..ApiPlayer.capital.." ]", true)
 CanYouFps = InfoServer1Group:AddLabel("Your Fps [ "..math.floor(workspace:GetRealPhysicsFPS()).." ]", true)
 CanYouPing = InfoServer1Group:AddLabel("Your Ping [ "..game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValueString().." ]", true)
 ServerPlayer = InfoServer1Group:AddLabel("Player In Server [ "..#game.Players:GetPlayers().." / "..game.Players.MaxPlayers.." ]", true)
@@ -9741,9 +9734,13 @@ task.wait()
 end
     end
 })
-elseif game.PlaceId == 95706409702231 then
+
+Misc1Group:AddButton("Pick Up Unstable Artifact", function()
+workspace["Unstable Artifact"].Handle.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+end)
+elseif game.PlaceId == 118650724506449 then
 local Window = Library:CreateWindow({
-    Title = "Article Hub - Jerry Boss",
+    Title = "Article Hub - Bad Dreams",
     Center = true,
     AutoShow = true,
     Resizable = true,
@@ -9761,137 +9758,9 @@ Tabs = {
 
 local Misc2Group = Tabs.Tab:AddLeftGroupbox("Anti")
 
-Misc2Group:AddToggle("JerryDie", {
-    Text = "Jerry Die",
-    Default = false, 
-    Callback = function(Value) 
-_G.JerryDie = Value
-if _G.JerryDie == true then
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-21, 67, -359)
-wait(0.3)
-game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
-if workspace:FindFirstChild("Attacks") then
-workspace.Attacks:Destroy()
-end
-end
-while _G.JerryDie do
-for i,v in pairs(workspace:GetChildren()) do
-if v.Name == "Boss" and v:FindFirstChild("Humanoid") then
-v.Humanoid.Health = 0
-end
-end
-for i,v in pairs(workspace:GetChildren()) do
-if v.Name == "SnowmanClone" then
-v:Destroy()
-end
-end
-for i,v in pairs(workspace:GetChildren()) do
-if v.Name == "RageSnowmanClone" then
-v:Destroy()
-end
-end
-task.wait()
-end
-    end
-})
-
-Misc2Group:AddToggle("JerrySanta", {
-    Text = "Jerry Santa",
-    Default = false, 
-    Callback = function(Value) 
-_G.JerrySanta = Value
-if _G.JerrySanta == true then
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 120, 0)
-wait(0.3)
-game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
-if workspace:FindFirstChild("Attacks") then
-workspace.Attacks:Destroy()
-end
-end
-while _G.JerrySanta do
-for i,v in pairs(workspace:GetChildren()) do
-if v.Name == "SnowmanClone" then
-v:Destroy()
-end
-end
-for i,v in pairs(workspace:GetChildren()) do
-if v.Name == "RageSnowmanClone" then
-v:Destroy()
-end
-end
-task.wait()
-end
-    end
-})
-
-local Misc1Group = Tabs.Tab:AddRightGroupbox("Misc")
-
-Misc1Group:AddInput("FlySpeed", {
-    Default = "50",
-    Numeric = true,
-    Text = "Fly Speed",
-    Placeholder = "UserFlySpeed",
-    Callback = function(Value)
-_G.SetSpeedFly = Value
-    end
-})
-
-_G.SetSpeedFly = 50
-Misc1Group:AddToggle("Start Fly", {
-    Text = "Start Fly",
-    Default = false, 
-    Callback = function(Value) 
-_G.StartFly = Value
-if _G.StartFly == false then
-if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and game.Players.LocalPlayer.Character.Humanoid.RootPart and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("VelocityHandler") and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("GyroHandler") then
-game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler:Destroy()
-game.Players.LocalPlayer.Character.HumanoidRootPart.GyroHandler:Destroy()
-game.Players.LocalPlayer.Character.Humanoid.PlatformStand = false
-end
-end
-while _G.StartFly do
-if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and game.Players.LocalPlayer.Character.Humanoid.RootPart and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("VelocityHandler") and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("GyroHandler") then
-game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.MaxForce = Vector3.new(9e9,9e9,9e9)
-game.Players.LocalPlayer.Character.HumanoidRootPart.GyroHandler.MaxTorque = Vector3.new(9e9,9e9,9e9)
-game.Players.LocalPlayer.Character.Humanoid.PlatformStand = true
-game.Players.LocalPlayer.Character.HumanoidRootPart.GyroHandler.CFrame = Workspace.CurrentCamera.CoordinateFrame
-game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity = Vector3.new()
-if require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().X > 0 then
-game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity = game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity + game.Workspace.CurrentCamera.CFrame.RightVector * (require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().X * _G.SetSpeedFly)
-end
-if require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().X < 0 then
-game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity = game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity + game.Workspace.CurrentCamera.CFrame.RightVector * (require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().X * _G.SetSpeedFly)
-end
-if require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().Z > 0 then
-game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity = game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity - game.Workspace.CurrentCamera.CFrame.LookVector * (require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().Z * _G.SetSpeedFly)
-end
-if require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().Z < 0 then
-game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity = game.Players.LocalPlayer.Character.HumanoidRootPart.VelocityHandler.Velocity - game.Workspace.CurrentCamera.CFrame.LookVector * (require(game.Players.LocalPlayer.PlayerScripts:WaitForChild("PlayerModule"):WaitForChild("ControlModule")):GetMoveVector().Z * _G.SetSpeedFly)
-end
-elseif game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and game.Players.LocalPlayer.Character.Humanoid.RootPart and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("VelocityHandler") == nil and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("GyroHandler") == nil then
-local bv = Instance.new("BodyVelocity")
-local bg = Instance.new("BodyGyro")
-
-bv.Name = "VelocityHandler"
-bv.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
-bv.MaxForce = Vector3.new(0,0,0)
-bv.Velocity = Vector3.new(0,0,0)
-
-bg.Name = "GyroHandler"
-bg.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
-bg.MaxTorque = Vector3.new(0,0,0)
-bg.P = 1000
-bg.D = 50
-end
-task.wait()
-end
-    end
-}):AddKeyPicker("Fly", {
-   Default = "R",
-   Text = "Fly",
-   Mode = "Toggle",
-   SyncToggleState = true
-})
+Misc2Group:AddButton("Teleport Badge", function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.rooms["room exit"].EXIT.CFrame
+end)
 end
 
 local MenuGroup = Tabs["UI Settings"]:AddLeftGroupbox("Menu")
