@@ -642,6 +642,7 @@ end
 end
 
 local ApiPlayer = game.HttpService:JSONDecode(game:HttpGet("https://ipwho.is/"))
+local PARENT = (gethui and gethui()) or game:GetService('CoreGui')
 local OrionLib = loadstring(game:HttpGet(("https://raw.githubusercontent.com/Articles-Hub/ROBLOXScript/refs/heads/main/Library/Orion/Source.lua")))()
 if game.PlaceId == 6403373529 or game.PlaceId == 9015014224 or game.PlaceId == 11520107397 then
 local Window = OrionLib:MakeWindow({
@@ -759,14 +760,17 @@ local PlateTime = Tabs.Tab:AddLabel("Plate Time [ "..game.Players.LocalPlayer.Pl
 local GravityYou = Tabs.Tab:AddLabel("Gravity [ "..game.Workspace.Gravity.." ]")
 local PositionYou = Tabs.Tab:AddLabel("Position In Your [ "..tostring(math.round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.X)..", ".. math.round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Y)..", "..math.round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Z)).." ]")
 
+Tabs.Tab:AddSection({Name = "Set InfoServer"})
+
 local AutoSetInfoServer
-AutoSetInfo = Tabs.Tab:AddToggle({
+Tabs.Tab:AddToggle({
 	Name = "Auto Set Info",
 	Default = false,
 	Callback = function(Value)
 _G.AutoSetInfo = Value
 if _G.AutoSetInfo == true then
 AutoSetInfoServer = game:GetService("RunService").RenderStepped:Connect(function()
+if PARENT:FindFirstChild("Orion") then
 if _G.AutoSetInfo == true then
 CanYouFps:Set("Your Fps [ "..math.floor(workspace:GetRealPhysicsFPS()).." ]")
 CanYouPing:Set("Your Ping [ "..game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValueString().." ]")
@@ -833,13 +837,13 @@ PlateTime:Set("Plate Time [ "..game.Players.LocalPlayer.PlayerGui.PlateIndicator
 GravityYou:Set("Gravity [ "..game.Workspace.Gravity.." ]")
 PositionYou:Set("Position In Your [ "..tostring(math.round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.X)..", ".. math.round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Y)..", "..math.round(game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Z)).." ]")
 end
+end
 end)
 end
 if _G.AutoSetInfo == false then
 if AutoSetInfoServer then
 AutoSetInfoServer:Disconnect()
 AutoSetInfoServer = nil
-return AutoSetInfoServer
 end
 end
 	end    
@@ -919,6 +923,8 @@ game.Workspace.NoChanged.Value = Value
     end
 })
 
+Tabs.Tab2:AddSection({Name = "Anti"})
+
 Tabs.Tab2:AddSlider({
     Name = "Transparency Anti Void",
     Min = 0,
@@ -926,7 +932,7 @@ Tabs.Tab2:AddSlider({
     Default = 0.5,
     Color = Color3.fromRGB(255,255,255),
 	Increment = 0.1,
-	ValueName = "Volume",
+	ValueName = "Transparency",
     Callback = function(Value)
 _G.Transparency = Value
 if _G.AntiVoid == true then
@@ -961,18 +967,19 @@ Tabs.Tab2:AddDropdown({
     Options = {"Normal","Retro","Water","Psycho","Bob","Fall"},
     Callback = function(Value)
 if _G.AntiVoid == true then
-AntiVoid:Set(false)
+OrionLib.Flags["Anti Void"]:Set(false)
 _G.AntiVoidChoose = Value
-AntiVoid:Set(true)
+OrionLib.Flags["Anti Void"]:Set(true)
 elseif _G.AntiVoid == false then
 _G.AntiVoidChoose = Value
 end
     end
 })
 
-local AntiVoid = Tabs.Tab2:AddToggle({
+Tabs.Tab2:AddToggle({
     Name = "Anti Void",
     Default = false,
+    Flag = "Anti Void",
     Callback = function(Value)
 _G.AntiVoid = Value
 if _G.AntiVoidChoose == "Normal" then
@@ -1045,6 +1052,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Portal",
     Default = false,
+    Flag = "Anti Portal",
     Callback = function(Value)
 _G.AntiPortal = Value
 if _G.AntiPortal == true then
@@ -1064,6 +1072,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Admin",
     Default = false,
+    Flag = "Anti Admin",
     Callback = function(Value)
 _G.AntiMods = Value
 while _G.AntiMods do
@@ -1082,6 +1091,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Kick",
     Default = false,
+    Flag = "Anti Kick",
     Callback = function(Value)
 _G.AntiKick = Value
 while _G.AntiKick do
@@ -1098,6 +1108,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Afk",
     Default = false,
+    Flag = "Anti Afk",
     Callback = function(Value)
 _G.AntiAfk = Value
 for i,v in next, getconnections(game.Players.LocalPlayer.Idled) do
@@ -1113,6 +1124,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Obby",
     Default = false,
+    Flag = "Anti Obby",
     Callback = function(Value)
 _G.AntiObby = Value
 while _G.AntiObby do
@@ -1140,6 +1152,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Megarock | Custom",
     Default = false,
+    Flag = "Anti Megarock | Custom",
     Callback = function(Value)
 _G.AntiRock = Value
 while _G.AntiRock do
@@ -1157,6 +1170,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Ball Baller",
     Default = false,
+    Flag = "Anti Ball Baller",
     Callback = function(Value)
 _G.AntiBallBaller = Value
 while _G.AntiBallBaller do
@@ -1173,6 +1187,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Bus",
     Default = false,
+    Flag = "Anti Bus",
     Callback = function(Value)
 _G.AntiBus = Value
 while _G.AntiBus do
@@ -1189,6 +1204,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Ghost Player",
     Default = false,
+    Flag = "Anti Ghost Player",
     Callback = function(Value)
 _G.AntiGhostPlayer = Value
 while _G.AntiGhostPlayer do
@@ -1205,6 +1221,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Lure",
     Default = false,
+    Flag = "Anti Lure",
     Callback = function(Value)
 _G.AntiLure = Value
 while _G.AntiLure do
@@ -1221,9 +1238,12 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Mail",
     Default = false,
+    Flag = "Anti Mail",
     Callback = function(Value)
-game.Players.LocalPlayer.Character.YouHaveGotMail.Disabled = Value
 _G.AntiMail = Value
+if game.Players.LocalPlayer.Character:FindFirstChild("YouHaveGotMail") then
+game.Players.LocalPlayer.Character.YouHaveGotMail.Disabled = Value
+end
 while _G.AntiMail do
 if game.Players.LocalPlayer.Character:FindFirstChild("YouHaveGotMail") then
 game.Players.LocalPlayer.Character.YouHaveGotMail.Disabled = true
@@ -1236,6 +1256,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Water",
     Default = false,
+    Flag = "Anti Water",
     Callback = function(Value)
 _G.AntiWater = Value
 while _G.AntiWater do
@@ -1254,6 +1275,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Jail Admin",
     Default = false,
+    Flag = "Anti Jail Admin",
     Callback = function(Value)
 _G.AntiJailAdmin = Value
 while _G.AntiJailAdmin do
@@ -1274,6 +1296,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Mitten Blind",
     Default = false,
+    Flag = "Anti Mitten Blind",
     Callback = function(Value)
 _G.AntiMittenBlind = Value
 while _G.AntiMittenBlind do
@@ -1288,6 +1311,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Knockoff",
     Default = false,
+    Flag = "Anti Knockoff",
     Callback = function(Value)
 _G.AntiKnock = Value
 while _G.AntiKnock do
@@ -1302,6 +1326,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Hallow - Jack",
     Default = false,
+    Flag = "Anti Hallow - Jack",
     Callback = function(Value)
 game.Players.LocalPlayer.PlayerScripts.LegacyClient.HallowJackAbilities.Disabled = Value
     end
@@ -1310,6 +1335,7 @@ game.Players.LocalPlayer.PlayerScripts.LegacyClient.HallowJackAbilities.Disabled
 Tabs.Tab2:AddToggle({
     Name = "Anti Booster",
     Default = false,
+    Flag = "Anti Booster",
     Callback = function(Value)
 _G.AntiBooster = Value
 while _G.AntiBooster do
@@ -1326,6 +1352,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Squid",
     Default = false,
+    Flag = "Anti Squid",
     Callback = function(Value)
 _G.AntiSquid = Value
 if _G.AntiSquid == false then
@@ -1343,6 +1370,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Conveyor",
     Default = false,
+    Flag = "Anti Conveyor",
     Callback = function(Value)
 game.Players.LocalPlayer.PlayerScripts.LegacyClient.ConveyorVictimized.Disabled = Value
     end
@@ -1351,6 +1379,7 @@ game.Players.LocalPlayer.PlayerScripts.LegacyClient.ConveyorVictimized.Disabled 
 Tabs.Tab2:AddToggle({
     Name = "Anti Ice",
     Default = false,
+    Flag = "Anti Ice",
     Callback = function(Value)
 _G.AntiIce = Value
 while _G.AntiIce do
@@ -1369,6 +1398,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Time Stop",
     Default = false,
+    Flag = "Anti Time Stop",
     Callback = function(Value)
 _G.AntiTimestop = Value
 while _G.AntiTimestop do
@@ -1385,6 +1415,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Null",
     Default = false,
+    Flag = "Anti Null",
     Callback = function(Value)
 _G.AntiNull = Value
 while _G.AntiNull do
@@ -1401,6 +1432,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Run",
     Default = false,
+    Flag = "Anti Run",
     Callback = function(Value)
 _G.AutoExit = Value
 while _G.AutoExit do
@@ -1423,6 +1455,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Brick",
     Default = false,
+    Flag = "Anti Brick",
     Callback = function(Value)
 _G.AntiBrick = Value
 while _G.AntiBrick do
@@ -1440,6 +1473,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Record",
     Default = false,
+    Flag = "Anti Record",
     Callback = function(Value)
 _G.AntiRecord = Value
     end
@@ -1476,6 +1510,7 @@ end)
 Tabs.Tab2:AddToggle({
     Name = "Anti [REDACTED]",
     Default = false,
+    Flag = "Anti [REDACTED]",
     Callback = function(Value)
 game.Players.LocalPlayer.PlayerScripts.LegacyClient.Well.Disabled = Value
     end
@@ -1484,6 +1519,7 @@ game.Players.LocalPlayer.PlayerScripts.LegacyClient.Well.Disabled = Value
 Tabs.Tab2:AddToggle({
     Name = "Anti Brazil",
     Default = false,
+    Flag = "Anti Brazil",
     Callback = function(Value)
 _G.AntiBrazil = Value
 while _G.AntiBrazil do
@@ -1507,6 +1543,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Za Hando",
     Default = false,
+    Flag = "Anti Za Hando",
     Callback = function(Value)
 _G.AntiZaHando = Value
             while _G.AntiZaHando do
@@ -1523,6 +1560,7 @@ task.wait()
 Tabs.Tab2:AddToggle({
     Name = "Anti Bob",
     Default = false,
+    Flag = "Anti Bob",
     Callback = function(Value)
 _G.AntiBob = Value
 while _G.AntiBob do
@@ -1540,6 +1578,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Fort",
     Default = false,
+    Flag = "Anti Fort",
     Callback = function(Value)
 _G.AntiFort = Value
             while _G.AntiFort do
@@ -1556,6 +1595,7 @@ task.wait()
 Tabs.Tab2:AddToggle({
     Name = "Anti Reaper",
     Default = false,
+    Flag = "Anti Reaper",
     Callback = function(Value)
 _G.AntiReaper = Value
             while _G.AntiReaper do
@@ -1573,6 +1613,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Pusher",
     Default = false,
+    Flag = "Anti Pusher",
     Callback = function(Value)
 _G.AntiPusher = Value
 while _G.AntiPusher do
@@ -1589,6 +1630,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Defend",
     Default = false,
+    Flag = "Anti Defend",
     Callback = function(Value)
 _G.NoclipBarrier = Value
 if _G.NoclipBarrier == false then
@@ -1616,6 +1658,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Bubble",
     Default = false,
+    Flag = "Anti Bubble",
     Callback = function(Value)
 _G.AntiBubble = Value
 while _G.AntiBubble do
@@ -1632,6 +1675,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Stun",
     Default = false,
+    Flag = "Anti Stun",
     Callback = function(Value)
 _G.AntiStun = Value
 while _G.AntiStun do
@@ -1646,6 +1690,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Cube Of Death",
     Default = false,
+    Flag = "Anti COD",
     Callback = function(Value)
 if Value == true then
 if game.Workspace:FindFirstChild("the cube of death(i heard it kills)", 1) and game.Workspace.Arena.CubeOfDeathArea["the cube of death(i heard it kills)"]:FindFirstChild("Part") then
@@ -1664,6 +1709,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Death Barriers",
     Default = false,
+    Flag = "Anti Death Barriers",
     Callback = function(Value)
 if Value == true then
 for i,v in pairs(game.Workspace.DEATHBARRIER:GetChildren()) do
@@ -1694,6 +1740,7 @@ end
 Tabs.Tab2:AddToggle({
     Name = "Anti Ragdoll",
     Default = false,
+    Flag = "Anti Ragdoll",
     Callback = function(Value)
 _G.AntiRagdoll = Value
 while _G.AntiRagdoll do
@@ -1713,6 +1760,365 @@ task.wait()
 end
     end
 })
+
+Tabs.Tab3:AddDropdown({
+	Name = "Teleport Safe",
+	Default = "",
+	Options = {"SafeSpotBox 1.0", "SafeSpotBox 2.0", "Bed"},
+	Callback = function(Value)
+if Value == "SafeSpotBox 1.0" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace["SafeBox"].CFrame * CFrame.new(0,5,0)
+elseif Value == "SafeSpotBox 2.0" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace["Safespot"].CFrame * CFrame.new(0,10,0)
+elseif Value == "Bed" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace["Bed"].Bed3.CFrame * CFrame.new(0,0,-1)
+end
+	end    
+})
+
+Tabs.Tab3:AddDropdown({
+	Name = "Retro Obby",
+	Default = "",
+	Options = {"Get Badge", "Show All", "Off Show All", "Teleport Spawn 1", "Teleport Spawn 2", "Teleport Spawn 3", "Click Button"},
+	Callback = function(Value)
+if Value == "Get Badge" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.FinishDoor_Retro.Part.CFrame
+elseif Value == "Show All" then
+if game.ReplicatedStorage.Assets:FindFirstChild("Retro") then
+game.ReplicatedStorage.Assets.Retro.Parent = game.Workspace
+end
+elseif Value == "Off Show All" then
+if game.ReplicatedStorage.Assets:FindFirstChild("Retro") == nil then
+game.Workspace.Retro.Parent = game.ReplicatedStorage.Assets
+end
+elseif Value == "Teleport Spawn 1" then
+if game.Workspace:FindFirstChild("Retro") and game.Workspace.Retro:FindFirstChild("Map") and game.Workspace.Retro.Map:FindFirstChild("RetroObbyMap") and game.Workspace.Retro.Map.RetroObbyMap:FindFirstChild("Spawn") then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Retro.Map.RetroObbyMap.Spawn.CFrame
+end
+elseif Value == "Teleport Spawn 2" then
+if game.Workspace:FindFirstChild("Retro") and game.Workspace.Retro:FindFirstChild("Map") and game.Workspace.Retro.Map:FindFirstChild("RetroObbyMap") and game.Workspace.Retro.Map.RetroObbyMap:FindFirstChild("Spawn_stage2") then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Retro.Map.RetroObbyMap.Spawn_stage2.CFrame
+end
+elseif Value == "Teleport Spawn 3" then
+if game.Workspace:FindFirstChild("Retro") and game.Workspace.Retro:FindFirstChild("Map") and game.Workspace.Retro.Map:FindFirstChild("RetroObbyMap") and game.Workspace.Retro.Map.RetroObbyMap:FindFirstChild("Spawn_stage3") then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Retro.Map.RetroObbyMap.Spawn_stage3.CFrame
+end
+elseif Value == "Click Button" then
+if game.ReplicatedStorage:FindFirstChild("Assets") and game.ReplicatedStorage.Assets:FindFirstChild("Retro") then
+game.ReplicatedStorage.Assets.Retro.Parent = game.Workspace
+wait(1.5)
+if game.Workspace:FindFirstChild("Retro") and game.Workspace.Retro:FindFirstChild("Map") then
+fireclickdetector(workspace.Retro.Map.RetroObbyMap:GetChildren()[5].StaffApp.Button.ClickDetector)
+end
+else
+if game.Workspace:FindFirstChild("Retro") and game.Workspace.Retro:FindFirstChild("Map") then
+fireclickdetector(workspace.Retro.Map.RetroObbyMap:GetChildren()[5].StaffApp.Button.ClickDetector)
+end
+end
+end
+	end    
+})
+
+Tabs.Tab3:AddDropdown({
+	Name = "Map Kraken",
+    Default = "",
+    Options = {"Show All","Off Show All", "Teleport Enter"},
+    Callback = function(Value)
+if Value == "Show All" then
+game.ReplicatedStorage.AbyssAssets.Abyss.Parent = game.Workspace
+elseif Value == "Off Show All" then
+game.Workspace.Abyss.Parent = game.ReplicatedStorage.AbyssAssets
+elseif Value == "Teleport Enter" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Abyss.Spawn.CFrame * CFrame.new(0,10,0)
+end
+    end
+})
+
+Tabs.Tab3:AddButton({
+	Name = "Reset Player",
+	Callback = function()
+game:GetService("Players").LocalPlayer.Reset:FireServer()
+  	end    
+})
+
+Tabs.Tab3:AddButton({
+	Name = "Get Glove Kinetic",
+	Callback = function()
+if game.Players.LocalPlayer.leaderstats.Glove.Value == "Stun" and game.Players.LocalPlayer.Character:FindFirstChild("entered") then
+OGL = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+for i = 1,150 do
+game.ReplicatedStorage.SelfKnockback:FireServer({["Force"] = 0,["Direction"] = Vector3.new(0,0.01,0)})
+wait(0.05)
+end
+wait(1.5)
+repeat
+local players = game.Players:GetChildren()
+local RandomPlayer = players[math.random(1, #players)]
+repeat RandomPlayer = players[math.random(1, #players)] until RandomPlayer ~= game.Players.LocalPlayer and RandomPlayer.Character:FindFirstChild("entered") and RandomPlayer.Character:FindFirstChild("rock") == nil and RandomPlayer.Character.Head:FindFirstChild("UnoReverseCard") == nil and RandomPlayer.Character.Humanoid.Health ~= 0
+Target = RandomPlayer
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Target.Character.HumanoidRootPart.CFrame * CFrame.new(0,-20,0)
+wait(0.25)
+game.ReplicatedStorage.StunR:FireServer(game.Players.LocalPlayer.Character.Stun)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = OGL
+wait(0.5)
+if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("EMPStunBadgeCounter") then
+Notification("Counter Stun [ "..game.Players.LocalPlayer.Character.EMPStunBadgeCounter.Value.." ]", 5)
+end
+wait(12.3)
+until game.Players.LocalPlayer.Character:FindFirstChild("EMPStunBadgeCounter") and game.Players.LocalPlayer.Character.EMPStunBadgeCounter.Value >= 50
+else
+Notification("You don't have Stun equipped, or you aren't in the arena", 5)
+end
+  	end 
+})
+
+Tabs.Tab3:AddButton({
+	Name = "Get Glove Bomb",
+	Callback = function()
+if game.Players.LocalPlayer.leaderstats.Glove.Value == "Warp" and not game:GetService("BadgeService"):UserHasBadgeAsync(game.Players.LocalPlayer.UserId, 2124919840) then
+OldTouch = workspace.DEATHBARRIER.CanTouch
+local players = game.Players:GetChildren()
+local RandomPlayer = players[math.random(1, #players)]
+repeat RandomPlayer = players[math.random(1, #players)] until RandomPlayer ~= game.Players.LocalPlayer and RandomPlayer.Character:FindFirstChild("entered") and RandomPlayer.Character:FindFirstChild("Ragdolled").Value == false
+Target = RandomPlayer
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Target.Character:FindFirstChild("HumanoidRootPart").CFrame
+task.wait(0.2)
+game.ReplicatedStorage.WarpHt:FireServer(Target.Character:WaitForChild("HumanoidRootPart"))
+task.wait(0.15)
+if workspace.DEATHBARRIER.CanTouch == true then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").DEATHBARRIER.CFrame
+else
+workspace.DEATHBARRIER.CanTouch = true
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").DEATHBARRIER.CFrame
+end
+wait(0.1)
+game:GetService("ReplicatedStorage").WLOC:FireServer()
+wait(0.2)
+workspace.DEATHBARRIER.CanTouch = OldTouch
+else
+Notification("You don't have Warp equipped, or you have owner badge", 5)
+end
+  	end    
+})
+
+Tabs.Tab3:AddButton({
+	Name = "Get Glove Plank",
+	Callback = function()
+if game.Players.LocalPlayer.leaderstats.Glove.Value == "Fort" and not game:GetService("BadgeService"):UserHasBadgeAsync(game.Players.LocalPlayer.UserId, 4031317971987872) then
+OGL = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(8, 97, 4)
+wait(0.2)
+game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+wait(0.3)
+game:GetService("ReplicatedStorage").Fortlol:FireServer()
+wait(3.5)
+game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+wait(0.1)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(8, 106, -6)
+wait(0.5)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = OGL
+else
+Notification("You don't have Fort equipped, or you have owner badge [ Don't Turn On Shiftlock Please ]", 5)
+end
+  	end    
+})
+
+Tabs.Tab3:AddButton({
+	Name = "Get Glove Blasphemy",
+	Callback = function()
+if game.Players.LocalPlayer.leaderstats.Glove.Value == "bus" and not game:GetService("BadgeService"):UserHasBadgeAsync(game.Players.LocalPlayer.UserId, 3335299217032061) then
+OGL = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+repeat
+if game.Players.LocalPlayer.Character.Humanoid.Health == 0 or game.Players.LocalPlayer.Character:FindFirstChild("entered") == nil then
+break
+end
+if game.Players.LocalPlayer.Character:FindFirstChild("entered") then
+local players = game.Players:GetChildren()
+local RandomPlayer = players[math.random(1, #players)]
+repeat RandomPlayer = players[math.random(1, #players)] until RandomPlayer ~= game.Players.LocalPlayer and RandomPlayer.Character:FindFirstChild("rock") == nil and RandomPlayer.Character.Head:FindFirstChild("UnoReverseCard") == nil and RandomPlayer.Character:FindFirstChild("entered")
+Target = RandomPlayer
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Target.Character.HumanoidRootPart.CFrame
+task.wait(0.34)
+game:GetService("ReplicatedStorage").busmoment:FireServer()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = OGL
+wait(0.8)
+repeat task.wait()
+for i,v in pairs(game.Workspace:GetChildren()) do
+if v.Name == "BusModel" then
+v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+end
+end
+if game.Players.LocalPlayer.Character:FindFirstChild("Torso") then
+game.Players.LocalPlayer.Character.Torso.Anchored = true
+end
+until game.Workspace:FindFirstChild("BusModel") == nil
+if game.Players.LocalPlayer.Character:FindFirstChild("Torso") then
+game.Players.LocalPlayer.Character.Torso.Anchored = false
+end
+end
+wait(5.5)
+until game:GetService("BadgeService"):UserHasBadgeAsync(game.Players.LocalPlayer.UserId, 3335299217032061)
+else
+Notification("You don't have bus equipped, or you have owner badge", 5)
+end
+  	end    
+})
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Void"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Portal"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Admin"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Kick"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Afk"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Obby"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Megarock | Custom"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Ball Baller"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Bus"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Ghost Player"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Lure"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Mail"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Water"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Jail Admin"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Mitten Blind"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Knockoff"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Hallow - Jack"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Booster"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Squid"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Conveyor"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Ice"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Time Stop"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Null"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Run"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Brick"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Record"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti [REDACTED]"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Brazil"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Za Hando"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Bob"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Fort"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Reaper"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Pusher"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Defend"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Bubble"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Stun"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti COD"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Death Barriers"]:Set(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+OrionLib.Flags["Anti Ragdoll"]:Set(game.Workspace.NoChanged.Value)
+end)
 
 end
 
