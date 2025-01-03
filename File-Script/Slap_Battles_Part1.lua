@@ -907,6 +907,813 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Articles-Hub/ROBLOXSc
     end
 })
 
+if game.Workspace:FindFirstChild("NoChanged") == nil then
+local NoChanged = Instance.new("BoolValue", workspace)
+NoChanged.Name = "NoChanged"
+end
+Tabs.Tab2:AddToggle({
+    Name = "Toggle Anti",
+    Default = false,
+    Callback = function(Value)
+game.Workspace.NoChanged.Value = Value
+    end
+})
+
+Tabs.Tab2:AddSlider({
+    Name = "Transparency Anti Void",
+    Min = 0,
+    Max = 1,
+    Default = 0.5,
+    Color = Color3.fromRGB(255,255,255),
+	Increment = 0.1,
+	ValueName = "Volume",
+    Callback = function(Value)
+_G.Transparency = Value
+if _G.AntiVoid == true then
+if _G.AntiVoidChoose == "Normal" then
+game.Workspace["VoidPart"].Transparency = Value
+game.Workspace["VoidPart"]["TAntiVoid"].Transparency = Value
+elseif _G.AntiVoidChoose == "Retro" then
+game.Workspace["Psycho"]["Retro1"].Transparency = Value
+game.Workspace["Psycho"]["Retro1"]["Retro2"].Transparency = Value
+game.Workspace["Psycho"]["Retro1"]["Retro3"].Transparency = Value
+elseif _G.AntiVoidChoose == "Water" then
+game.Workspace["Psycho"]["Kraken"].Transparency = Value
+elseif _G.AntiVoidChoose == "Psycho" then
+game.Workspace["Psycho"].Transparency = Value
+elseif _G.AntiVoidChoose == "Bob" then
+game.Workspace["VoidPart"]["TAntiVoid"].Transparency = Value
+game.Workspace["BobWalk1"].Transparency = Value
+for i,v in pairs(game.Workspace.BobWalk1:GetChildren()) do
+v.Transparency = _G.Transparency
+end
+end
+end
+    end
+})
+
+if _G.AntiVoidChoose == nil then
+_G.AntiVoidChoose = "Normal"
+end
+Tabs.Tab2:AddDropdown({
+    Name = "Choose Anti Void",
+    Default = "Normal",
+    Options = {"Normal","Retro","Water","Psycho","Bob","Fall"},
+    Callback = function(Value)
+if _G.AntiVoid == true then
+AntiVoid:Set(false)
+_G.AntiVoidChoose = Value
+AntiVoid:Set(true)
+elseif _G.AntiVoid == false then
+_G.AntiVoidChoose = Value
+end
+    end
+})
+
+local AntiVoid = Tabs.Tab2:AddToggle({
+    Name = "Anti Void",
+    Default = false,
+    Callback = function(Value)
+_G.AntiVoid = Value
+if _G.AntiVoidChoose == "Normal" then
+game.Workspace["VoidPart"].CanCollide = Value
+game.Workspace["VoidPart"]["TAntiVoid"].CanCollide = Value
+if Value == false then
+game.Workspace["VoidPart"].Transparency = 1
+game.Workspace["VoidPart"]["TAntiVoid"].Transparency = 1
+else
+game.Workspace["VoidPart"].Transparency = _G.Transparency
+game.Workspace["VoidPart"]["TAntiVoid"].Transparency = _G.Transparency
+end
+elseif _G.AntiVoidChoose == "Retro" then
+game.Workspace["Psycho"]["Retro1"].CanCollide = Value
+game.Workspace["Psycho"]["Retro1"]["Retro2"].CanCollide = Value
+game.Workspace["Psycho"]["Retro1"]["Retro3"].CanCollide = Value
+if Value == true then
+game.Workspace["Psycho"]["Retro1"].Transparency = _G.Transparency
+game.Workspace["Psycho"]["Retro1"]["Retro2"].Transparency = _G.Transparency
+game.Workspace["Psycho"]["Retro1"]["Retro3"].Transparency = _G.Transparency
+else
+game.Workspace["Psycho"]["Retro1"].Transparency = 1
+game.Workspace["Psycho"]["Retro1"]["Retro2"].Transparency = 1
+game.Workspace["Psycho"]["Retro1"]["Retro3"].Transparency = 1
+end
+elseif _G.AntiVoidChoose == "Water" then
+game.Workspace["Psycho"]["Kraken"].CanCollide = Value
+if Value == true then
+game.Workspace["Psycho"]["Kraken"].Transparency = _G.Transparency
+else
+game.Workspace["Psycho"]["Kraken"].Transparency = 1
+end
+elseif _G.AntiVoidChoose == "Psycho" then
+game.Workspace["Psycho"].CanCollide = Value
+if Value == true then
+game.Workspace["Psycho"].Transparency = _G.Transparency
+else
+game.Workspace["Psycho"].Transparency = 1
+end
+elseif _G.AntiVoidChoose == "Bob" then
+game.Workspace["VoidPart"]["TAntiVoid"].CanCollide = Value
+game.Workspace["BobWalk1"].CanCollide = Value
+for i,v in pairs(game.Workspace.BobWalk1:GetChildren()) do
+v.CanCollide = Value
+end
+if Value == true then
+game.Workspace["VoidPart"]["TAntiVoid"].Transparency = _G.Transparency
+game.Workspace["BobWalk1"].Transparency = _G.Transparency
+for i,v in pairs(game.Workspace.BobWalk1:GetChildren()) do
+v.Transparency = _G.Transparency
+end
+else
+game.Workspace["VoidPart"]["TAntiVoid"].Transparency = 1
+game.Workspace["BobWalk1"].Transparency = 1
+for i,v in pairs(game.Workspace.BobWalk1:GetChildren()) do
+v.Transparency = 1
+end
+end
+elseif _G.AntiVoidChoose == "Fall" then
+while _G.AntiVoid do
+if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character.HumanoidRootPart.Position.Y < -30 then
+game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(game.Workspace.Origo.CFrame * CFrame.new(0,-5,0))
+end
+task.wait()
+end
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Portal",
+    Default = false,
+    Callback = function(Value)
+_G.AntiPortal = Value
+if _G.AntiPortal == true then
+workspace.Lobby.Teleport2.CanTouch = false
+workspace.Lobby.Teleport3.CanTouch = false
+workspace.Lobby.Teleport4.CanTouch = false
+workspace.Lobby.Teleport6.CanTouch = false
+else
+workspace.Lobby.Teleport2.CanTouch = true
+workspace.Lobby.Teleport3.CanTouch = true
+workspace.Lobby.Teleport4.CanTouch = true
+workspace.Lobby.Teleport6.CanTouch = true
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Admin",
+    Default = false,
+    Callback = function(Value)
+_G.AntiMods = Value
+while _G.AntiMods do
+for i,v in pairs(game.Players:GetChildren()) do
+        if v:GetRankInGroup(9950771) >= 2 then
+         _G.AntiKick = false
+     game.Players.LocalPlayer:Kick("High Rank Player Detected.".." [ "..v.Name.." ]")
+   break
+     end
+end
+task.wait()
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Kick",
+    Default = false,
+    Callback = function(Value)
+_G.AntiKick = Value
+while _G.AntiKick do
+for i,v in pairs(game.CoreGui.RobloxPromptGui.promptOverlay:GetDescendants()) do
+                    if v.Name == "ErrorPrompt" then
+game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId, game.Players.LocalPlayer)
+                    end
+                end
+task.wait()
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Afk",
+    Default = false,
+    Callback = function(Value)
+_G.AntiAfk = Value
+for i,v in next, getconnections(game.Players.LocalPlayer.Idled) do
+if _G.AntiAfk then
+v:Disable()
+else
+v:Enable()
+end
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Obby",
+    Default = false,
+    Callback = function(Value)
+_G.AntiObby = Value
+while _G.AntiObby do
+for _, v in pairs(game.Workspace:GetChildren()) do
+          if string.find(v.Name, "Lava") then
+             if v.CanTouch == true then
+                 v.CanTouch = false
+             end
+         end
+     end
+task.wait()
+end
+if _G.AntiObby == false then
+for _, v in pairs(game.Workspace:GetChildren()) do
+          if string.find(v.Name, "Lava") then
+              if v.CanTouch == false then
+                  v.CanTouch = true
+             end
+         end
+    end
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Megarock | Custom",
+    Default = false,
+    Callback = function(Value)
+_G.AntiRock = Value
+while _G.AntiRock do
+for _,v in pairs(game.Players:GetChildren()) do
+                    if v.Name == "rock" then
+                        v.CanTouch = false
+                        v.CanQuery = false
+                    end
+                end
+task.wait()
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Ball Baller",
+    Default = false,
+    Callback = function(Value)
+_G.AntiBallBaller = Value
+while _G.AntiBallBaller do
+for i,v in pairs(game.Workspace:GetChildren()) do
+                    if v.Name == "ClonedBall" then
+                        v:Destroy()
+                    end
+                end
+task.wait()
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Bus",
+    Default = false,
+    Callback = function(Value)
+_G.AntiBus = Value
+while _G.AntiBus do
+for i,v in pairs(game.Workspace:GetChildren()) do
+                    if v.Name == "BusModel" then
+                        v.CanTouch = false
+                    end
+                end
+task.wait()
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Ghost Player",
+    Default = false,
+    Callback = function(Value)
+_G.AntiGhostPlayer = Value
+while _G.AntiGhostPlayer do
+for i,v in pairs(game.Players:GetChildren()) do
+if v ~= game.Players.LocalPlayer.Name and game.Workspace:FindFirstChild(v.Name.."_Body") and game.Workspace[v.Name.."_Body"]:FindFirstChild("Part") then
+gloveHits[game.Players.LocalPlayer.leaderstats.Glove.Value]:FireServer(game.Workspace[v.Name.."_Body"].Part)
+end
+end
+task.wait()
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Lure",
+    Default = false,
+    Callback = function(Value)
+_G.AntiLure = Value
+while _G.AntiLure do
+for i,v in pairs(game.Workspace:GetChildren()) do
+                    if string.find(v.Name, "_lure") and v:FindFirstChild("Root") and v:FindFirstChild("watercircle") then
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Root.CFrame
+                    end
+                end
+task.wait()
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Mail",
+    Default = false,
+    Callback = function(Value)
+game.Players.LocalPlayer.Character.YouHaveGotMail.Disabled = Value
+_G.AntiMail = Value
+while _G.AntiMail do
+if game.Players.LocalPlayer.Character:FindFirstChild("YouHaveGotMail") then
+game.Players.LocalPlayer.Character.YouHaveGotMail.Disabled = true
+end
+task.wait()
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Water",
+    Default = false,
+    Callback = function(Value)
+_G.AntiWater = Value
+while _G.AntiWater do
+if game.Workspace:FindFirstChild("puddles") then
+   for i,v in pairs(game.Workspace.puddles:GetChildren()) do
+          if v.Name == "puddle" then
+             v.CanTouch = false
+         end
+    end
+end
+task.wait()
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Jail Admin",
+    Default = false,
+    Callback = function(Value)
+_G.AntiJailAdmin = Value
+while _G.AntiJailAdmin do
+for i,v in pairs(game.Workspace:GetChildren()) do
+                    if v.Name == "jail" then
+for i,h in pairs(v:GetChildren()) do
+                    if h.ClassName == "Part" then
+                        h.CanCollide = false
+                    end
+                end
+            end
+        end
+task.wait()
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Mitten Blind",
+    Default = false,
+    Callback = function(Value)
+_G.AntiMittenBlind = Value
+while _G.AntiMittenBlind do
+if game.Players.LocalPlayer.PlayerGui:FindFirstChild("MittenBlind") then
+game.Players.LocalPlayer.PlayerGui:FindFirstChild("MittenBlind"):Destroy()
+end
+task.wait()
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Knockoff",
+    Default = false,
+    Callback = function(Value)
+_G.AntiKnock = Value
+while _G.AntiKnock do
+if game.Workspace.CurrentCamera and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and game.Workspace.CurrentCamera.CameraSubject ~= game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and game.Workspace.CurrentCamera.CameraSubject == game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name.."'s_falsehead") then
+game.Workspace.CurrentCamera.CameraSubject = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+end
+task.wait()
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Hallow - Jack",
+    Default = false,
+    Callback = function(Value)
+game.Players.LocalPlayer.PlayerScripts.LegacyClient.HallowJackAbilities.Disabled = Value
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Booster",
+    Default = false,
+    Callback = function(Value)
+_G.AntiBooster = Value
+while _G.AntiBooster do
+for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                    if v.Name == "BoosterObject" then
+                        v:Destroy()
+                    end
+                end
+task.wait()
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Squid",
+    Default = false,
+    Callback = function(Value)
+_G.AntiSquid = Value
+if _G.AntiSquid == false then
+game.Players.LocalPlayer.PlayerGui.SquidInk.Enabled = true
+end
+while _G.AntiSquid do
+if game.Players.LocalPlayer.PlayerGui:FindFirstChild("SquidInk") then
+game.Players.LocalPlayer.PlayerGui.SquidInk.Enabled = false
+end
+task.wait()
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Conveyor",
+    Default = false,
+    Callback = function(Value)
+game.Players.LocalPlayer.PlayerScripts.LegacyClient.ConveyorVictimized.Disabled = Value
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Ice",
+    Default = false,
+    Callback = function(Value)
+_G.AntiIce = Value
+while _G.AntiIce do
+    for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+            if v.Name == "Icecube" then
+                v:Destroy()
+                game.Players.LocalPlayer.Character.Humanoid.PlatformStand = false
+                game.Players.LocalPlayer.Character.Humanoid.AutoRotate = true
+            end
+       end
+task.wait()
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Time Stop",
+    Default = false,
+    Callback = function(Value)
+_G.AntiTimestop = Value
+while _G.AntiTimestop do
+                for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+                    if v.ClassName == "Part" then
+                        v.Anchored = false
+                    end
+                end
+task.wait()
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Null",
+    Default = false,
+    Callback = function(Value)
+_G.AntiNull = Value
+while _G.AntiNull do
+for i,v in pairs(game.Workspace:GetChildren()) do
+                if v.Name == "Imp" and v:FindFirstChild("Body") then
+                       gloveHits[game.Players.LocalPlayer.leaderstats.Glove.Value]:FireServer(v.Body,true)
+                 end
+            end
+task.wait()
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Run",
+    Default = false,
+    Callback = function(Value)
+_G.AutoExit = Value
+while _G.AutoExit do
+if game.Players.LocalPlayer.Character:FindFirstChild("InLabyrinth") then
+for i, v in pairs(workspace:GetChildren()) do
+    if string.find(v.Name, "Labyrinth") and v:FindFirstChild("Doors") then
+        for i, y in ipairs(v.Doors:GetChildren()) do
+            if y:FindFirstChild("Hitbox") and y.Hitbox:FindFirstChild("TouchInterest") then
+              y.Hitbox.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+            end
+        end
+    end
+end
+end
+task.wait()
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Brick",
+    Default = false,
+    Callback = function(Value)
+_G.AntiBrick = Value
+while _G.AntiBrick do
+for i,v in pairs(game.Workspace:GetChildren()) do
+                    if v.Name == "Union" then
+                        v.CanTouch = false
+                        v.CanQuery = false
+                    end
+                end
+task.wait()
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Record",
+    Default = false,
+    Callback = function(Value)
+_G.AntiRecord = Value
+    end
+})
+for i,p in pairs(game.Players:GetChildren()) do
+if p ~= game.Players.LocalPlayer then
+p.Chatted:Connect(function(message)
+Words = message:split(" ")
+if _G.AntiRecord == true then
+for i, v in pairs(Words) do
+if v:lower():match("recording") or v:lower():match(" rec") or v:lower():match("record") or v:lower():match("discor") or v:lower():match(" disco") or v:lower():match(" disc") or v:lower():match("ticket") or v:lower():match("tickets") or v:lower():match(" ds") or v:lower():match(" dc") or v:lower():match("dizzy") or v:lower():match("dizzycord") or v:lower():match(" clip") or v:lower():match("proof") or v:lower():match("evidence") then
+AntiKick:Set(false)
+game.Players.LocalPlayer:Kick("Possible player recording detected.".." [ "..p.Name.." ]".." [ "..message.." ]")
+end
+end
+end
+end)
+end
+end
+game.Players.PlayerAdded:Connect(function(Player)
+Player.Chatted:Connect(function(message)
+Words = message:split(" ")
+if _G.AntiRecord == true then
+for i, v in pairs(Words) do
+if v:lower():match("recording") or v:lower():match(" rec") or v:lower():match("record") or v:lower():match("discor") or v:lower():match(" disco") or v:lower():match(" disc") or v:lower():match("ticket") or v:lower():match("tickets") or v:lower():match(" ds") or v:lower():match(" dc") or v:lower():match("dizzy") or v:lower():match("dizzycord") or v:lower():match(" clip") or v:lower():match("proof") or v:lower():match("evidence") then
+AntiKick:Set(false)
+game.Players.LocalPlayer:Kick("Possible player recording detected.".." [ "..Player.Name.." ]".." [ "..message.." ]")
+end
+end
+end
+end)
+end)
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti [REDACTED]",
+    Default = false,
+    Callback = function(Value)
+game.Players.LocalPlayer.PlayerScripts.LegacyClient.Well.Disabled = Value
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Brazil",
+    Default = false,
+    Callback = function(Value)
+_G.AntiBrazil = Value
+while _G.AntiBrazil do
+for i,v in pairs(game.workspace.Lobby.brazil:GetChildren()) do
+                  if v.CanTouch == true then
+                     v.CanTouch = false
+                 end
+             end
+task.wait()
+end
+if _G.AntiBrazil == false then
+for i,v in pairs(game.workspace.Lobby.brazil:GetChildren()) do
+                  if v.CanTouch == false then
+                     v.CanTouch = true
+                 end
+            end
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Za Hando",
+    Default = false,
+    Callback = function(Value)
+_G.AntiZaHando = Value
+            while _G.AntiZaHando do
+                for i,v in pairs(game.Workspace:GetChildren()) do
+                    if v.ClassName == "Part" and v.Name == "Part" then
+                        v:Destroy()
+                    end
+                end
+task.wait()
+            end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Bob",
+    Default = false,
+    Callback = function(Value)
+_G.AntiBob = Value
+while _G.AntiBob do
+for i, v in pairs(game.Workspace:GetChildren()) do
+if string.find(v.Name, "ÅBOB_") and v:FindFirstChild("Target") and v.Target.Value == game.Players.LocalPlayer.Name then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.Arena.CubeOfDeathArea["the cube of death(i heard it kills)"].Part.CFrame * CFrame.new(0,30,0)
+Toggles["Anti COD"]:SetValue(true)
+end
+end
+task.wait()
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Fort",
+    Default = false,
+    Callback = function(Value)
+_G.AntiFort = Value
+            while _G.AntiFort do
+                for i,v in pairs(game.Workspace:GetChildren()) do
+                    if v.Name == "Part" then
+                        v.CanCollide = false
+                    end
+                end
+task.wait()
+            end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Reaper",
+    Default = false,
+    Callback = function(Value)
+_G.AntiReaper = Value
+            while _G.AntiReaper do
+for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                    if v.Name == "DeathMark" then
+                        game:GetService("ReplicatedStorage").ReaperGone:FireServer(game:GetService("Players").LocalPlayer.Character.DeathMark)
+                    game:GetService("Lighting"):WaitForChild("DeathMarkColorCorrection"):Destroy() 
+                    end
+                end
+task.wait()
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Pusher",
+    Default = false,
+    Callback = function(Value)
+_G.AntiPusher = Value
+while _G.AntiPusher do
+for i,v in pairs(game.Workspace:GetChildren()) do
+                    if v.Name == "wall" then
+                        v.CanCollide = false
+                    end
+                end
+task.wait()
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Defend",
+    Default = false,
+    Callback = function(Value)
+_G.NoclipBarrier = Value
+if _G.NoclipBarrier == false then
+for i,v in pairs(game.Workspace:GetChildren()) do
+                    if string.find(v.Name, "ÅBarrier") then
+                        if v.CanCollide == false then
+                            v.CanCollide = true
+                         end
+                    end
+                end
+           end
+while _G.NoclipBarrier do
+for i,v in pairs(game.Workspace:GetChildren()) do
+                    if string.find(v.Name, "ÅBarrier") then
+                        if v.CanCollide == true then
+                            v.CanCollide = false
+                         end
+                     end
+                end
+task.wait()
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Bubble",
+    Default = false,
+    Callback = function(Value)
+_G.AntiBubble = Value
+while _G.AntiBubble do
+for i,v in pairs(workspace:GetChildren()) do
+                    if v.Name == "BubbleObject" and v:FindFirstChild("Weld") then
+                        v:FindFirstChild("Weld"):Destroy()
+                    end
+               end
+task.wait()
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Stun",
+    Default = false,
+    Callback = function(Value)
+_G.AntiStun = Value
+while _G.AntiStun do
+if game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") and game.Workspace:FindFirstChild("Shockwave") and game.Players.LocalPlayer.Character.Ragdolled.Value == false then
+game.Players.LocalPlayer.Character.Humanoid.PlatformStand = false
+end
+task.wait()
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Cube Of Death",
+    Default = false,
+    Callback = function(Value)
+if Value == true then
+if game.Workspace:FindFirstChild("the cube of death(i heard it kills)", 1) and game.Workspace.Arena.CubeOfDeathArea["the cube of death(i heard it kills)"]:FindFirstChild("Part") then
+game.Workspace.Arena.CubeOfDeathArea["the cube of death(i heard it kills)"].CanTouch = false
+game.Workspace.Arena.CubeOfDeathArea["the cube of death(i heard it kills)"].Part.CanTouch = false
+end
+else
+if game.Workspace:FindFirstChild("the cube of death(i heard it kills)", 1) and game.Workspace.Arena.CubeOfDeathArea["the cube of death(i heard it kills)"]:FindFirstChild("Part") then
+game.Workspace.Arena.CubeOfDeathArea["the cube of death(i heard it kills)"].CanTouch = true
+game.Workspace.Arena.CubeOfDeathArea["the cube of death(i heard it kills)"].Part.CanTouch = true
+end
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Death Barriers",
+    Default = false,
+    Callback = function(Value)
+if Value == true then
+for i,v in pairs(game.Workspace.DEATHBARRIER:GetChildren()) do
+                    if v.ClassName == "Part" and v.Name == "BLOCK" then
+                        v.CanTouch = false
+                    end
+                end
+workspace.DEATHBARRIER.CanTouch = false
+workspace.DEATHBARRIER2.CanTouch = false
+workspace.dedBarrier.CanTouch = false
+workspace.ArenaBarrier.CanTouch = false
+workspace.AntiDefaultArena.CanTouch = false
+else
+for i,v in pairs(game.Workspace.DEATHBARRIER:GetChildren()) do
+                    if v.ClassName == "Part" and v.Name == "BLOCK" then
+                        v.CanTouch = true
+                    end
+                end
+workspace.DEATHBARRIER.CanTouch = true
+workspace.DEATHBARRIER2.CanTouch = true
+workspace.dedBarrier.CanTouch = true
+workspace.ArenaBarrier.CanTouch = true
+workspace.AntiDefaultArena.CanTouch = true
+end
+    end
+})
+
+Tabs.Tab2:AddToggle({
+    Name = "Anti Ragdoll",
+    Default = false,
+    Callback = function(Value)
+_G.AntiRagdoll = Value
+while _G.AntiRagdoll do
+if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character:FindFirstChild("Torso") and game.Players.LocalPlayer.Character:FindFirstChild("Ragdolled") then
+if game.Players.LocalPlayer.Character:FindFirstChild("Ragdolled") and game.Players.LocalPlayer.Character:WaitForChild("Ragdolled").Value == true then
+repeat task.wait()
+if game.Players.LocalPlayer.Character:FindFirstChild("Torso") then
+game.Players.LocalPlayer.Character.Torso.Anchored = true
+end
+until game.Players.LocalPlayer.Character:FindFirstChild("Ragdolled") and game.Players.LocalPlayer.Character:WaitForChild("Ragdolled").Value == false
+if game.Players.LocalPlayer.Character:FindFirstChild("Torso") then
+game.Players.LocalPlayer.Character.Torso.Anchored = false
+end
+end
+end
+task.wait()
+end
+    end
+})
+
 end
 
 Tabs["Settings Ui"]:AddSlider({
@@ -920,6 +1727,14 @@ Tabs["Settings Ui"]:AddSlider({
 	Callback = function(Value)
 		_G.VolumeTime = Value
 	end    
+})
+
+Tabs["Settings Ui"]:AddToggle({
+    Name = "Notification Sound",
+    Default = false,
+    Callback = function(Value)
+_G.NotificationSound = Value
+    end
 })
 
 Tabs["Settings Ui"]:AddDropdown({
