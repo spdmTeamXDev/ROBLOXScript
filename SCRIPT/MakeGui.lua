@@ -9,7 +9,12 @@ _G.GuiName = {
       ImagesLabel = "ImageLabel",
       ImagesButton = "ImageButton",
       Box = "TextBox",
-      Corner = "UICorner"
+      Corner = "UICorner",
+      Stroke = "UIStroke",
+      Gradient = "UIGradient",
+      ListLayout = "UIListLayout",
+      Scrolling = "ScrollingFrame",
+      Script = "LocalScript"
 }
 
 function CreateClear(Name,call)
@@ -315,7 +320,7 @@ local func, err = loadstring('gui = game.Players.LocalPlayer.PlayerGui:FindFirst
             pcall(func)
         else
         if game.CoreGui:FindFirstChild("Article GUI") and game.CoreGui["Article GUI"]:FindFirstChild("Console") then
-           game.CoreGui["Article GUI"].Console.Frame.TextBox.Text = err
+           game.CoreGui["Article GUI"].Console.Frame.TextBox.Text = game.CoreGui["Article GUI"].Console.Frame.TextBox.Text.."\n\n"..err
         end
       end
 end)
@@ -619,6 +624,104 @@ end, function(Value)
 _G.GuiName.Corner = Value
 end)
 
+CreateButtonMake("UIStroke", {
+    FaceFort = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+}, function()
+local function UICornerName(Name)
+return string.format([[
+local %s = Instance.new("UIStroke")
+%s.Color = Color3.new(0, 0, 0)
+%s.Thickness = 2
+%s.Parent = nill
+
+]], Name, Name, Name, Name)
+end
+setclipboard(UICornerName(_G.GuiName.Corner))
+end, function(Value)
+_G.GuiName.Stroke = Value
+end)
+
+CreateButtonMake("UIGradient", {
+    FaceFort = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+}, function()
+local function UIGradientName(Name)
+return string.format([[
+local %s = Instance.new("UIGradient")
+%s.ColorSequence = {
+      Color3.fromRGB(255, 0, 0), 
+      Color3.fromRGB(0, 255, 0), 
+      Color3.fromRGB(0, 0, 255)
+}
+%s.Transparency = 0.5
+%s.Rotation = 90
+%s.Parent = gui
+
+]], Name, Name, Name, Name, Name)
+end
+setclipboard(UIGradientName(_G.GuiName.Gradient))
+end, function(Value)
+_G.GuiName.Gradient = Value
+end)
+
+CreateButtonMake("UIListLayout", {
+    FaceFort = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+}, function()
+local function UIListLayoutName(Name)
+return string.format([[
+local %s = Instance.new("UIListLayout")
+%s.HorizontalAlignment = Enum.HorizontalAlignment.Center
+%s.SortOrder = Enum.SortOrder.LayoutOrder
+%s.Padding = UDim.new(0, 10)
+%s.Parent = gui
+
+]], Name, Name, Name, Name, Name)
+end
+setclipboard(UIListLayoutName(_G.GuiName.ListLayout))
+end, function(Value)
+_G.GuiName.ListLayout = Value
+end)
+
+CreateButtonMake("ScrollingFrame", {
+    FaceFort = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+}, function()
+local function ScrollingFrameName(Name)
+return string.format([[
+local %s = Instance.new("ScrollingFrame")
+%s.Size = UDim2.new(0.5, 0, 0.5, 0)
+%s.Position = UDim2.new(0.5, 0, 0.5, 0)
+%s.BackgroundColor3 = Color3.new(1, 1, 1)
+%s.BorderColor3 = Color3.new(0, 0, 0)
+%s.BorderSizePixel = 1
+%s.BackgroundTransparency = 0 
+%s.Parent = gui
+
+]], Name, Name, Name, Name, Name, Name, Name, Name)
+end
+setclipboard(ScrollingFrameName(_G.GuiName.Scrolling))
+end, function(Value)
+_G.GuiName.Scrolling = Value
+end)
+
+CreateButtonMake("LocalScript", {
+    FaceFort = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+}, function()
+local function LocalScriptName(Name)
+return string.format([[
+local function Script()
+	local %s = Instance.new("LocalScript", nill)
+	%s.Parent.MouseButton1Click:Connect(function()
+		--- Code
+	end)
+end
+coroutine.wrap(Script)()
+
+]], Name, Name)
+end
+setclipboard(LocalScriptName(_G.GuiName.Script))
+end, function(Value)
+_G.GuiName.Script = Value
+end)
+
 --- Color Gui ---
 
 local Frame = Instance.new("Frame")
@@ -778,7 +881,7 @@ local TextBox = Instance.new("TextBox")
 TextBox.Size = UDim2.new(0.999, 0, 1, 0)
 TextBox.Position = UDim2.new(0, 0, 0, 0)
 TextBox.BackgroundColor3 = Color3.new(0,0,0)
-TextBox.Text = ""
+TextBox.Text = "Script Notification Error"
 TextBox.TextColor3 = Color3.new(1,1,1)
 TextBox.BackgroundTransparency = 1
 TextBox.ClipsDescendants = true
@@ -916,6 +1019,7 @@ TextButtonNew("X",  {
 }, function()
 if game.CoreGui:FindFirstChild("Article GUI") and game.CoreGui["Article GUI"]:FindFirstChild("EditFrame") then
 game.CoreGui["Article GUI"]:FindFirstChild("EditFrame").Visible = false
+game.CoreGui["Article GUI"]:FindFirstChild("EditFrame1").Visible = false
 end
 end)
 
