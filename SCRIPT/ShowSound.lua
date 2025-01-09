@@ -383,11 +383,11 @@ GUI.Info.Close.MouseButton1Click:Connect(function()
    sound:Destroy()
   end
  end
- GUI.Info.Listen.Text = 'Listen'
+ GUI.Info.Listen.Text = 'Play'
 end)
 
 GUI.Info.Listen.MouseButton1Click:Connect(function()
- if GUI.Info.Listen.Text == 'Listen' then
+ if GUI.Info.Listen.Text == 'Play' then
   local samplesound = Instance.new('Sound') samplesound.Parent = game:GetService('Players').LocalPlayer.PlayerGui
   samplesound.Looped = true samplesound.SoundId = selectedaudio samplesound:Play() samplesound.Name = 'SampleSound'
   samplesound.Volume = 5
