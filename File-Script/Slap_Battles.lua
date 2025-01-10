@@ -1168,6 +1168,39 @@ end
     end
 })
 
+Anti2Group:AddToggle("Anti Boss Guide", {
+    Text = "Anti Join Boss Guide",
+    Default = false,
+    Callback = function(Value)
+_G.AntiJoinBossGuide = Value
+while _G.AntiJoinBossGuide do
+for i, v in pairs(workspace.BountyHunterRoom:GetChildren()) do
+if v.Name == "Mobel" and v:FindFirstChild("Meshes/boxshadow_Cube.005") and v["Meshes/boxshadow_Cube.005"]:FindFirstChild("Hitbox") then
+v["Meshes/boxshadow_Cube.005"].Hitbox.CanTouch = false
+end
+end
+task.wait()
+end
+    end
+})
+
+Anti2Group:AddToggle("Anti Snowball", {
+    Text = "Anti Snowball",
+    Default = false,
+    Callback = function(Value)
+_G.AntiSnowball = Value
+while _G.AntiSnowball do
+for i, v in pairs(workspace:GetChildren()) do
+if v.Name == "Snowball" and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+if 36 >= (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).Magnitude then
+v.CanTouch = false
+end
+end
+task.wait()
+end
+    end
+})
+
 Anti2Group:AddToggle("Anti Ball Baller", {
     Text = "Anti Ball Baller",
     Default = false,
@@ -1465,7 +1498,7 @@ Words = message:split(" ")
 if _G.AntiRecord == true then
 for i, v in pairs(Words) do
 if v:lower():match("recording") or v:lower():match(" rec") or v:lower():match("record") or v:lower():match("discor") or v:lower():match(" disco") or v:lower():match(" disc") or v:lower():match("ticket") or v:lower():match("tickets") or v:lower():match(" ds") or v:lower():match(" dc") or v:lower():match("dizzy") or v:lower():match("dizzycord") or v:lower():match(" clip") or v:lower():match("proof") or v:lower():match("evidence") then
-AntiKick:Set(false)
+Toggles["Anti Kick"]:SetValue(false)
 game.Players.LocalPlayer:Kick("Possible player recording detected.".." [ "..p.Name.." ]".." [ "..message.." ]")
 end
 end
@@ -1479,7 +1512,7 @@ Words = message:split(" ")
 if _G.AntiRecord == true then
 for i, v in pairs(Words) do
 if v:lower():match("recording") or v:lower():match(" rec") or v:lower():match("record") or v:lower():match("discor") or v:lower():match(" disco") or v:lower():match(" disc") or v:lower():match("ticket") or v:lower():match("tickets") or v:lower():match(" ds") or v:lower():match(" dc") or v:lower():match("dizzy") or v:lower():match("dizzycord") or v:lower():match(" clip") or v:lower():match("proof") or v:lower():match("evidence") then
-AntiKick:Set(false)
+Toggles["Anti Kick"]:SetValue(false)
 game.Players.LocalPlayer:Kick("Possible player recording detected.".." [ "..Player.Name.." ]".." [ "..message.." ]")
 end
 end
@@ -2403,10 +2436,10 @@ Badge2Group:AddButton({
     Func = function()
 if game.Players.LocalPlayer.leaderstats.Glove.Value == "Ghost" and game.Players.LocalPlayer.Character:FindFirstChild("entered") == nil then
 game.ReplicatedStorage.Ghostinvisibilityactivated:FireServer()
-fireclickdetector(workspace.Lobby.GloveStands["ZZZZZZZ"].ClickDetector)
+fireclickdetector(workspace.Lobby["ZZZZZZZ"].ClickDetector)
 wait(0.2)
 game:GetService("ReplicatedStorage").ZZZZZZZSleep:FireServer()
-fireclickdetector(workspace.Lobby.GloveStands["Brick"].ClickDetector)
+fireclickdetector(workspace.Lobby["Brick"].ClickDetector)
 wait(0.2)
 if not game.Players.LocalPlayer.Character:FindFirstChild("entered") and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
 repeat task.wait()
@@ -2417,10 +2450,10 @@ wait(0.35)
 game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(game.Workspace["SafeBox"].CFrame * CFrame.new(0,5,0))
 wait(0.2)
 repeat wait(1)
-if AutoBrick == "Fast" then
+if _G.AutoBrick == "Fast" then
 game:GetService("ReplicatedStorage").lbrick:FireServer()
 game:GetService("Players").LocalPlayer.PlayerGui.BRICKCOUNT.ImageLabel.TextLabel.Text = game:GetService("Players").LocalPlayer.PlayerGui.BRICKCOUNT.ImageLabel.TextLabel.Text + 1
-elseif AutoBrick == "Slow" then
+elseif _G.AutoBrick == "Slow" then
 game:GetService("VirtualInputManager"):SendKeyEvent(true,"E",false,x)
 end
 until game:GetService("BadgeService"):UserHasBadgeAsync(game.Players.LocalPlayer.UserId, 2127567042)
@@ -2458,9 +2491,9 @@ Badge2Group:AddButton({
     Text = "Get Free Lamp",
     Func = function()
 if game.Players.LocalPlayer.leaderstats.Glove.Value == "ZZZZZZZ" and not game:GetService("BadgeService"):UserHasBadgeAsync(game.Players.LocalPlayer.UserId, 490455814138437) then
-repeat task.wait()
+for i = 1, 5 do
 game:GetService("ReplicatedStorage").nightmare:FireServer("LightBroken")
-until game:GetService("BadgeService"):UserHasBadgeAsync(game.Players.LocalPlayer.UserId, 490455814138437)
+end
 else
 Notification("You don't have ZZZZZZZ equipped, or Owner badge", 5)
 end
@@ -2562,35 +2595,6 @@ end
 }):AddKeyPicker("ToolboxFarm", {
    Default = "Z",
    Text = "Toolbox Farm",
-   Mode = "Toggle",
-   SyncToggleState = true
-})
-
-Badge2Group:AddToggle("Peep Farm", {
-    Text = "Peep Farm",
-    Default = false, 
-    Callback = function(Value) 
-_G.Peepfarm = Value
-while _G.Peepfarm do
-if game.Workspace:FindFirstChild("XmasSnowPeeps") then
-for i,v in pairs(workspace.XmasSnowPeeps:GetChildren()) do
-                    if v.Name == "Peep" then
-if v:FindFirstChild("ClickDetector") then
-v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(-5, -1.63, 0)
-end
-if fireclickdetector and v:FindFirstChild("ClickDetector") then
-fireclickdetector(v.ClickDetector, 0)
-fireclickdetector(v.ClickDetector, 1)
-                    end
-                end
-                end
-            end
-task.wait()
-end
-    end
-}):AddKeyPicker("PeepFarm", {
-   Default = "Z",
-   Text = "Peep Farm",
    Mode = "Toggle",
    SyncToggleState = true
 })
@@ -2934,9 +2938,9 @@ for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
 game:GetService("Players").LocalPlayer.Reset:FireServer()
 wait(3.82)
 OGlove = game.Players.LocalPlayer.leaderstats.Glove.Value
-fireclickdetector(workspace.Lobby.GloveStands.Ghost.ClickDetector)
+fireclickdetector(workspace.Lobby.Ghost.ClickDetector)
 game.ReplicatedStorage.Ghostinvisibilityactivated:FireServer()
-fireclickdetector(workspace.Lobby.GloveStands[OGlove].ClickDetector)
+fireclickdetector(workspace.Lobby[OGlove].ClickDetector)
 for i,v in pairs(game.LogService:GetChildren()) do
                         v.Parent = game.Players.LocalPlayer.Backpack
                 end
@@ -3003,46 +3007,6 @@ elseif Value == "Island 2" then
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-8.17191315, -5.14452887, -205.249741, -0.98216176, -3.48867246e-09, -0.188037917, -4.19987778e-09, 1, 3.38382322e-09, 0.188037917, 4.11319823e-09, -0.98216176)
 elseif Value == "Island 3" then
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-6.66747713, -5.06731462, 213.575378, 0.945777893, 2.52095178e-10, 0.324814111, -3.7823856e-08, 1, 1.09357536e-07, -0.324814111, -1.15713661e-07, 0.945777893)
-end
-    end
-})
-
-Misc2Group:AddDropdown("Animation Combat", {
-    Text = "Animation Combat",
-    Values = {"Skukuchi Attacker", "Skukuchi Target", "Bomb Throw", "Bubble Shoot", "Revolver", "Ban Hammer", "Slapstick", "Dual", "Slap", "Bomb", "Rocket Launcher", "Rojo", "Rojo Recoil", "Thor", "Rob"},
-    Default = "",
-    Multi = false,
-    Callback = function(Value)
-if Value == "Skukuchi Attacker" then
-game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.CutsceneAttacker, game.Players.LocalPlayer.Character.Humanoid):Play()
-elseif Value == "Skukuchi Target" then
-game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.CutsceneTarget, game.Players.LocalPlayer.Character.Humanoid):Play()
-elseif Value == "Bomb Throw" then
-game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.bombthrow, game.Players.LocalPlayer.Character.Humanoid):Play()
-elseif Value == "Bubble Shoot" then
-game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.bubbleshoot, game.Players.LocalPlayer.Character.Humanoid):Play()
-elseif Value == "Revolver" then
-game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.Assets.Hitman.RevolverAnim, game.Players.LocalPlayer.Character.Humanoid):Play()
-elseif Value == "Ban Hammer" then
-game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.Assets.Retro.Animations["Ban Hammer"], game.Players.LocalPlayer.Character.Humanoid):Play()
-elseif Value == "Slapstick" then
-game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.slapstick_slap, game.Players.LocalPlayer.Character.Humanoid):Play()
-elseif Value == "Dual" then
-game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.DualSlap, game.Players.LocalPlayer.Character.Humanoid):Play()
-elseif Value == "Slap" then
-game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.Slap, game.Players.LocalPlayer.Character.Humanoid):Play()
-elseif Value == "Bomb" then
-game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.Assets.Retro.Animations.Bomb, game.Players.LocalPlayer.Character.Humanoid):Play()
-elseif Value == "Rocket Launcher" then
-game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.Assets.Retro.Animations["Rocket Launcher"], game.Players.LocalPlayer.Character.Humanoid):Play()
-elseif Value == "Rojo" then
-game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.Assets.Rojo.Animation, game.Players.LocalPlayer.Character.Humanoid):Play()
-elseif Value == "Rojo Recoil" then
-game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.Assets.Rojo.AnimationRecoil, game.Players.LocalPlayer.Character.Humanoid):Play()
-elseif Value == "Thor" then
-game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.Assets.Thor.Animation, game.Players.LocalPlayer.Character.Humanoid):Play()
-elseif Value == "Rob" then
-game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(game.ReplicatedStorage.robAnimation, game.Players.LocalPlayer.Character.Humanoid):Play()
 end
     end
 })
@@ -3883,6 +3847,12 @@ while _G.OnAbility and game.Players.LocalPlayer.leaderstats.Glove.Value == "Jerr
 game:GetService("ReplicatedStorage").GeneralAbility:FireServer(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(-3, 0, -3))
 task.wait()
 end
+while _G.OnAbility and game.Players.LocalPlayer.leaderstats.Glove.Value == "Snowroller" do
+game:GetService("ReplicatedStorage").GeneralAbility:FireServer()
+wait(0.3)
+game:GetService("ReplicatedStorage").GeneralAbility:FireServer("release")
+task.wait()
+end
     end
 }):AddKeyPicker("SpamAbility", {
    Default = "B",
@@ -4090,7 +4060,7 @@ _G.EquipGlove = Value
 
  Misc1Basic:AddDropdown("ChooseEquip", {
     Text = "Equip Glove",
-    Values = {"Normal","Tournament"},
+    Values = {"Normal","Tournament", "Old Glove + Tournament"},
     Default = "",
     Multi = false,
     Callback = function(Value)
@@ -4105,9 +4075,11 @@ fireclickdetector(workspace.Lobby[_G.EquipGlove].ClickDetector)
 else
 Notification("You aren't in the lobby.", 5)
 end
-elseif _G.GloveEquipHehe == "Tournament" then
+elseif _G.GloveEquipHehe == "Tournament" or _G.GloveEquipHehe == "Old Glove + Tournament" then
 if game.Players.LocalPlayer.Character:FindFirstChild("entered") == nil then
+if _G.GloveEquipHehe == "Tournament" then
 fireclickdetector(workspace.Lobby[_G.EquipGlove].ClickDetector)
+end
 wait(0.5)
 repeat task.wait() until game.Players.LocalPlayer.Character
 if not game.Players.LocalPlayer.Character:FindFirstChild("entered") and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
@@ -7118,6 +7090,14 @@ Toggles["Anti Bob"]:SetValue(game.Workspace.NoChanged.Value)
 end)
 
 game.Workspace.NoChanged.Changed:Connect(function()
+Toggles["Anti Boss Guide"]:SetValue(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
+Toggles["Anti Snowball"]:SetValue(game.Workspace.NoChanged.Value)
+end)
+
+game.Workspace.NoChanged.Changed:Connect(function()
 Toggles["Anti Brazil"]:SetValue(game.Workspace.NoChanged.Value)
 end)
 
@@ -9957,6 +9937,7 @@ gloveHits = {
     ["Stalker"] = game.ReplicatedStorage.GeneralHit,
     ["Angler"] = game.ReplicatedStorage.GeneralHit,
     ["Jerry"] = game.ReplicatedStorage.GeneralHit,
+    ["Snowroller"] = game.ReplicatedStorage.GeneralHit,
     ------------------------------------------------------------------------
     ["ZZZZZZZ"] = game.ReplicatedStorage.ZZZZZZZHit,
     ["Brick"] = game.ReplicatedStorage.BrickHit,
