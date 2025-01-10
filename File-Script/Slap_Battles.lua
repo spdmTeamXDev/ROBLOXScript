@@ -1196,6 +1196,7 @@ if 36 >= (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Posit
 v.CanTouch = false
 end
 end
+end
 task.wait()
 end
     end
