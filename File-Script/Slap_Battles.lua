@@ -80,10 +80,55 @@ end
 end
 
 function SpamReplica()
-if game.Players.LocalPlayer.leaderstats.Glove.Value == "Replica" and game.Players.LocalPlayer.Character.IsInDefaultArena.Value == true then
+if _G.GetTeleport == "Up To You" then
+OGL = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+end
+if game.Players.LocalPlayer.leaderstats.Glove.Value == "Replica" then
 while ReplicaFarm do
+repeat task.wait() until game.Players.LocalPlayer.Character
+if game.Players.LocalPlayer.Character:FindFirstChild("entered") == nil and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+repeat task.wait()
+firetouchinterest(game.Players.LocalPlayer.Character:WaitForChild("Head"), workspace.Lobby.Teleport2.TouchInterest.Parent, 0)
+firetouchinterest(game.Players.LocalPlayer.Character:WaitForChild("Head"), workspace.Lobby.Teleport2.TouchInterest.Parent, 1)
+until game.Players.LocalPlayer.Character:FindFirstChild("entered")
+end
+wait(0.1)
+if _G.GetTeleport == "Up To You" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = OGL
+elseif _G.GetTeleport == "SafeSpotBox 1.0" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace["SafeBox"].CFrame * CFrame.new(0,5,0)
+elseif _G.GetTeleport == "SafeSpotBox 2.0" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace["Safespot"].CFrame * CFrame.new(0,10,0)
+end
+wait(0.2)
 game:GetService("ReplicatedStorage").Duplicate:FireServer(true)
-wait(20)
+game:GetService("Players").LocalPlayer.Reset:FireServer()
+wait(0.05)
+repeat task.wait() until game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("entered") == nil and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+wait(0.08)
+fireclickdetector(workspace.Lobby.Dual.ClickDetector)
+wait(0.1)
+repeat task.wait() until game.Players.LocalPlayer.Character
+if game.Players.LocalPlayer.Character:FindFirstChild("entered") == nil and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+repeat task.wait()
+firetouchinterest(game.Players.LocalPlayer.Character:WaitForChild("Head"), workspace.Lobby.Teleport1.TouchInterest.Parent, 0)
+firetouchinterest(game.Players.LocalPlayer.Character:WaitForChild("Head"), workspace.Lobby.Teleport1.TouchInterest.Parent, 1)
+until game.Players.LocalPlayer.Character:FindFirstChild("entered")
+end
+wait(0.2)
+if _G.GetTeleport == "Up To You" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = OGL
+elseif _G.GetTeleport == "SafeSpotBox 1.0" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace["SafeBox"].CFrame * CFrame.new(0,5,0)
+elseif _G.GetTeleport == "SafeSpotBox 2.0" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace["Safespot"].CFrame * CFrame.new(0,10,0)
+end
+wait(17)
+game:GetService("Players").LocalPlayer.Reset:FireServer()
+repeat task.wait() until game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("entered") == nil and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+wait(0.08)
+fireclickdetector(workspace.Lobby.Replica.ClickDetector)
+wait(0.07)
 end
 end
 end
@@ -702,6 +747,19 @@ else
 AlarmTime = InfoServer1Group:AddLabel("Good Night [ "..tonumber(os.date("%H")).." Hour ]", true)
 end
 AgeAccYou = InfoServer1Group:AddLabel("You Account Age [ "..game.Players.LocalPlayer.AccountAge.." ]", true)
+if game.Workspace:FindFirstChild("RoomsFolder") then
+PocketSpawn = {}
+for i,v in pairs(game.Workspace.RoomsFolder:GetChildren()) do
+if string.find(v.Name, "'s Room") then
+table.insert(PocketSpawn, v)
+end
+end
+end
+if #PocketSpawn == 0 then
+PocketKeypad = InfoServer1Group:AddLabel("Pocket Room [ No ]", true)
+elseif #PocketSpawn > 0 then
+PocketKeypad = InfoServer1Group:AddLabel("Pocket Room [ Yes ] [ "..#PocketSpawn.." ]", true)
+end
 if game.Players.LocalPlayer.Character.Humanoid.Health == 0 then
 ResetTime = InfoServer1Group:AddLabel("Time Spawn [ "..game.Players.RespawnTime.." ]", true)
 else
@@ -782,6 +840,19 @@ elseif tonumber(os.date("%H")) >= 17 and tonumber(os.date("%H")) < 21 then
 AlarmTime:SetText("Good Evening [ "..tonumber(os.date("%H")).." Hour ]", true)
 else
 AlarmTime:SetText("Good Night [ "..tonumber(os.date("%H")).." Hour ]", true)
+end
+if game.Workspace:FindFirstChild("RoomsFolder") then
+PocketSpawn = {}
+for i,v in pairs(game.Workspace.RoomsFolder:GetChildren()) do
+if string.find(v.Name, "'s Room") then
+table.insert(PocketSpawn, v)
+end
+end
+end
+if #PocketSpawn == 0 then
+PocketKeypad:SetText("Pocket Room [ No ]", true)
+elseif #PocketSpawn > 0 then
+PocketKeypad:SetText("Pocket Room [ Yes ] [ "..#PocketSpawn.." ]", true)
 end
 AgeAccYou:SetText("You Account Age [ "..game.Players.LocalPlayer.AccountAge.." ]", true)
 if game.Players.LocalPlayer.Character.Humanoid.Health == 0 then
@@ -1158,9 +1229,9 @@ Anti2Group:AddToggle("Anti Megarock", {
 _G.AntiRock = Value
 while _G.AntiRock do
 for _,v in pairs(game.Players:GetChildren()) do
-                    if v.Name == "rock" then
-                        v.CanTouch = false
-                        v.CanQuery = false
+                    if v:FindFirstChild("rock") then
+                        v.rock.CanTouch = false
+                        v.rock.CanQuery = false
                     end
                 end
 task.wait()
@@ -2215,7 +2286,8 @@ if teleportFunc then
         repeat wait() until game.Players.LocalPlayer
         wait(3)
 Time = 121
-fireclickdetector(game.Workspace.CounterLever.ClickDetector)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.CounterLever.Main.CFrame
+game.Workspace.CounterLever.ClickDetector.MouseClick:Connect(function()
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0,100,0)
 wait(0.2)
 game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
@@ -2225,14 +2297,15 @@ game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Error",Text =
 wait(1)
 end
 game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
-wait(0.5)
-firetouchinterest(game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart"), game.Workspace.Ruins.Elude.Glove, 0)
-firetouchinterest(game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart"), game.Workspace.Ruins.Elude.Glove, 1)
-for i,v in pairs(workspace.Maze:GetDescendants()) do
-if v:IsA("ClickDetector") then
-fireclickdetector(v)
+for i, v in pairs(workspace.Maze:GetChildren()) do
+if v.Name == "Part" and v:FindFirstChild("A0") and v:FindFirstChild("ClickDetector") then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame * CFrame.new(0,-20,0)
+v.ClickDetector.MouseClick:Connect(function()
+game.Workspace.Ruins.Elude.Glove.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+end)
 end
 end
+end)
     ]])
 elseif not teleportFunc then
 Notification("Bruh, Not only executor you autoexe", 5)
@@ -2732,7 +2805,7 @@ Badge2Group:AddToggle("AutoFram Brick", {
     Callback = function(Value) 
 _G.Brickfarm = Value
 if game.Players.LocalPlayer.leaderstats.Glove.Value == "Brick" then
-while Brickfarm do
+while _G.Brickfarm do
 if _G.AutoBrick == "Slow" then
 game:GetService("VirtualInputManager"):SendKeyEvent(true,"E",false,x)
 elseif _G.AutoBrick == "Fast" then
@@ -3854,6 +3927,10 @@ wait(0.3)
 game:GetService("ReplicatedStorage").GeneralAbility:FireServer("release")
 task.wait()
 end
+while _G.OnAbility and game.Players.LocalPlayer.leaderstats.Glove.Value == "Cherry" do
+game:GetService("ReplicatedStorage").GeneralAbility:FireServer()
+task.wait()
+end
     end
 }):AddKeyPicker("SpamAbility", {
    Default = "B",
@@ -3922,9 +3999,9 @@ Misc1Basic:AddToggle("Brick Orbit", {
     Callback = function(Value) 
 _G.BrickOrbit = Value
 while _G.BrickOrbit do
-for i, a in pairs(game.Workspace:GetChildren()) do
-        if a.Name == "Union" then
-           a.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(math.cos(tick() * 5 + (i - 1) * math.pi / 5) * 8, 0, math.sin(tick() * 5 + (i - 1) * math.pi / 5) * 8)
+for i, v in pairs(game.Workspace:GetChildren()) do
+        if v.Name == "Union" then
+           v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(math.cos(tick() * 5 + (i - 1) * math.pi / 5) * 8, 0, math.sin(tick() * 5 + (i - 1) * math.pi / 5) * 8)
         end
     end
 task.wait()
@@ -3978,6 +4055,30 @@ game.Players.LocalPlayer.Character:FindFirstChild("Rhythm"):Activate()
 end)
 end)
 end)
+
+Misc1Basic:AddToggle("Auto Slap Cherry", {
+    Text = "Slap Cherry Fast",
+    Default = false, 
+    Callback = function(Value) 
+_G.AutoSlapCherry = Value
+if game.Players.LocalPlayer.leaderstats.Glove.Value == "Cherry" then
+while _G.AutoSlapCherry do
+if workspace:FindFirstChild("cherry_storage") then
+for i, v in pairs(workspace.cherry_storage:GetChildren()) do
+if v.Name == ("Cherry "..game.Players.LocalPlayer.Name) and v:FindFirstChild("clone_remote") then
+v.clone_remote:FireServer()
+end
+end
+end
+task.wait()
+end
+elseif _G.RhythmNoteSpam == true then
+Notification("You don't have Cherry equipped", 5)
+wait(0.05)
+Toggles["Auto Slap Cherry"]:SetValue(false)
+end
+    end
+})
 
 Misc1Basic:AddButton("Free Emotes", function()
 if LoadingScr then return end
@@ -6576,7 +6677,7 @@ while _G.AutoFarmSlap do
 for i, v in pairs(workspace:GetChildren()) do 
                  if v.Name:match(game.Players.LocalPlayer.Name) and v:FindFirstChild("HumanoidRootPart") then
 if _G.FarmSlap == "Replica + Baller" or _G.FarmSlap == "Replica + Baller + Blink" then
-game.ReplicatedStorage.b:FireServer(v:WaitForChild("HumanoidRootPart"))
+gloveHits[game.Players.LocalPlayer.leaderstats.Glove.Value]:FireServer(v:WaitForChild("HumanoidRootPart"))
 end
                  end
 end
@@ -6615,14 +6716,14 @@ Glove2Group:AddToggle("Slap Replica", {
     Default = false, 
     Callback = function(Value) 
 ReplicaFarm = Value
-if game.Players.LocalPlayer.leaderstats.Glove.Value == "Replica" and game.Players.LocalPlayer.Character.IsInDefaultArena.Value == true then
+if game.Players.LocalPlayer.leaderstats.Glove.Value == "Replica" then
 if ReplicaFarm == true then
 coroutine.wrap(SpamReplica)()
 end
 while ReplicaFarm do
 for i, v in pairs(workspace:GetChildren()) do
                 if v.Name:match(game.Players.LocalPlayer.Name) and v:FindFirstChild("HumanoidRootPart") then
-game.ReplicatedStorage.b:FireServer(v:WaitForChild("HumanoidRootPart"))
+gloveHits[game.Players.LocalPlayer.leaderstats.Glove.Value]:FireServer(v:WaitForChild("HumanoidRootPart"))
                 end
             end
 task.wait()
@@ -7160,7 +7261,6 @@ local Window = Library:CreateWindow({
     
 Tabs = {
     Tab = Window:AddTab("Misc", "rbxassetid://4370318685"),
-    ["Update"] = Window:AddTab("Update", "rbxassetid://7733955511"),
 	["UI Settings"] = Window:AddTab("UI Settings", "rbxassetid://7733955511")
 }
 
@@ -7168,7 +7268,8 @@ local Badge1 = Tabs.Tab:AddLeftGroupbox("Misc")
 
 Badge1:AddButton("Get Elude + Counter", function()
 Time = 121
-fireclickdetector(game.Workspace.CounterLever.ClickDetector)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.CounterLever.Main.CFrame
+game.Workspace.CounterLever.ClickDetector.MouseClick:Connect(function()
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0,100,0)
 wait(0.2)
 game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
@@ -7178,14 +7279,15 @@ game:GetService("StarterGui"):SetCore("SendNotification",{Title = "Error",Text =
 wait(1)
 end
 game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
-wait(0.7)
-firetouchinterest(game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart"), game.Workspace.Ruins.Elude.Glove, 0)
-firetouchinterest(game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart"), game.Workspace.Ruins.Elude.Glove, 1)
-for i,v in pairs(workspace.Maze:GetDescendants()) do
-if v:IsA("ClickDetector") then
-fireclickdetector(v)
+for i, v in pairs(workspace.Maze:GetChildren()) do
+if v.Name == "Part" and v:FindFirstChild("A0") and v:FindFirstChild("ClickDetector") then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame * CFrame.new(0,-20,0)
+v.ClickDetector.MouseClick:Connect(function()
+game.Workspace.Ruins.Elude.Glove.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+end)
 end
 end
+end)
 end)
 
 Badge1:AddButton("Teleport Alchemist Plushie", function()
@@ -9939,6 +10041,7 @@ gloveHits = {
     ["Angler"] = game.ReplicatedStorage.GeneralHit,
     ["Jerry"] = game.ReplicatedStorage.GeneralHit,
     ["Snowroller"] = game.ReplicatedStorage.GeneralHit,
+    ["Cherry"] = game.ReplicatedStorage.GeneralHit,
     ------------------------------------------------------------------------
     ["ZZZZZZZ"] = game.ReplicatedStorage.ZZZZZZZHit,
     ["Brick"] = game.ReplicatedStorage.BrickHit,
