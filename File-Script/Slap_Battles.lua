@@ -70,21 +70,46 @@ SlapChanged.Name = "SlapChanged"
 SlapChanged.Value = ""
 end
 
-function SpamBaller()
-if game.Players.LocalPlayer.leaderstats.Glove.Value == "Baller" and game.Players.LocalPlayer.Character:FindFirstChild("entered") then
-while _G.BallerFarm do
-game:GetService("ReplicatedStorage").GeneralAbility:FireServer()
-wait(30.05)
-end
-end
-end
-
-function SpamReplica()
+function AutoFarmSlap(Choose)
 if _G.GetTeleport == "Up To You" then
 OGL = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
 end
+_G.FarmSlapBruh = Choose
+while _G.AutoFarmSlap do
+if _G.FarmSlapBruh == "Baller" then
+if game.Players.LocalPlayer.leaderstats.Glove.Value == "Baller" then
+repeat task.wait() until game.Players.LocalPlayer.Character
+if game.Players.LocalPlayer.Character:FindFirstChild("entered") == nil and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+repeat task.wait()
+firetouchinterest(game.Players.LocalPlayer.Character:WaitForChild("Head"), workspace.Lobby.Teleport1.TouchInterest.Parent, 0)
+firetouchinterest(game.Players.LocalPlayer.Character:WaitForChild("Head"), workspace.Lobby.Teleport1.TouchInterest.Parent, 1)
+until game.Players.LocalPlayer.Character:FindFirstChild("entered")
+end
+game:GetService("ReplicatedStorage").GeneralAbility:FireServer()
+wait(30.05)
+end
+elseif _G.FarmSlapBruh == "Blink" then
+if game.Players.LocalPlayer.leaderstats.Glove.Value == "Blink" then
+repeat task.wait() until game.Players.LocalPlayer.Character
+if game.Players.LocalPlayer.Character:FindFirstChild("entered") == nil and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+repeat task.wait()
+firetouchinterest(game.Players.LocalPlayer.Character:WaitForChild("Head"), workspace.Lobby.Teleport1.TouchInterest.Parent, 0)
+firetouchinterest(game.Players.LocalPlayer.Character:WaitForChild("Head"), workspace.Lobby.Teleport1.TouchInterest.Parent, 1)
+until game.Players.LocalPlayer.Character:FindFirstChild("entered")
+wait(0.1)
+if _G.GetTeleport == "Up To You" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = OGL
+elseif _G.GetTeleport == "SafeSpotBox 1.0" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace["SafeBox"].CFrame * CFrame.new(0,5,0)
+elseif _G.GetTeleport == "SafeSpotBox 2.0" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace["Safespot"].CFrame * CFrame.new(0,10,0)
+end
+end
+game:GetService("ReplicatedStorage").Blink:FireServer("OutOfBody", {["dir"] = Vector3.new(0, 0, 0),["ismoving"] = false,["mousebehavior"] = Enum.MouseBehavior.Default})
+task.wait(50.05)
+end
+elseif _G.FarmSlapBruh == "Replica" then
 if game.Players.LocalPlayer.leaderstats.Glove.Value == "Replica" then
-while ReplicaFarm do
 repeat task.wait() until game.Players.LocalPlayer.Character
 if game.Players.LocalPlayer.Character:FindFirstChild("entered") == nil and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
 repeat task.wait()
@@ -105,7 +130,6 @@ game:GetService("ReplicatedStorage").Duplicate:FireServer(true)
 game:GetService("Players").LocalPlayer.Reset:FireServer()
 wait(0.05)
 repeat task.wait() until game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("entered") == nil and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-wait(0.08)
 fireclickdetector(workspace.Lobby.Dual.ClickDetector)
 wait(0.1)
 repeat task.wait() until game.Players.LocalPlayer.Character
@@ -126,29 +150,10 @@ end
 wait(17)
 game:GetService("Players").LocalPlayer.Reset:FireServer()
 repeat task.wait() until game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("entered") == nil and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-wait(0.08)
 fireclickdetector(workspace.Lobby.Replica.ClickDetector)
-wait(0.07)
 end
-end
-end
-
-function SpamBlink()
-if game.Players.LocalPlayer.leaderstats.Glove.Value == "Blink" and game.Players.LocalPlayer.Character:FindFirstChild("entered") then
-while _G.BlinkFarm do
-game:GetService("ReplicatedStorage").Blink:FireServer("OutOfBody", {["dir"] = Vector3.new(0, 0, 0),["ismoving"] = false,["mousebehavior"] = Enum.MouseBehavior.Default})
-task.wait(50.05)
-end
-end
-end
-
-function AutoFarmSlap(Choose)
-if _G.GetTeleport == "Up To You" then
-OGL = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-end
-_G.FarmSlapBruh = Choose
-while _G.AutoFarmSlap do
-if _G.FarmSlapBruh == "Replica + Baller" then
+elseif _G.FarmSlapBruh == "Replica + Baller" then
+if game.Players.LocalPlayer.leaderstats.Glove.Value == "Baller" then
 repeat task.wait() until game.Players.LocalPlayer.Character
 if game.Players.LocalPlayer.Character:FindFirstChild("entered") == nil and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
 repeat task.wait()
@@ -160,7 +165,7 @@ wait(0.25)
 game:GetService("ReplicatedStorage").GeneralAbility:FireServer()
 task.wait(0.09)
 game:GetService("Players").LocalPlayer.Reset:FireServer()
-wait(3.75)
+repeat task.wait() until game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("entered") == nil and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
 fireclickdetector(workspace.Lobby.Replica.ClickDetector)
 wait(0.25)
 repeat task.wait() until game.Players.LocalPlayer.Character
@@ -182,9 +187,11 @@ wait(0.5)
 game:GetService("ReplicatedStorage").Duplicate:FireServer()
 wait(20)
 game:GetService("Players").LocalPlayer.Reset:FireServer()
-wait(3.75)
+repeat task.wait() until game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("entered") == nil and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
 fireclickdetector(workspace.Lobby.Baller.ClickDetector)
+end
 elseif _G.FarmSlapBruh == "Replica + Baller + Blink" then
+if game.Players.LocalPlayer.leaderstats.Glove.Value == "Blink" then
 if _G.GetTeleport == "Up To You" then
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = OGL
 end
@@ -211,7 +218,7 @@ wait(0.25)
 game:GetService("ReplicatedStorage").GeneralAbility:FireServer()
 task.wait(0.09)
 game:GetService("Players").LocalPlayer.Reset:FireServer()
-wait(3.75)
+repeat task.wait() until game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("entered") == nil and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
 fireclickdetector(workspace.Lobby.Replica.ClickDetector)
 wait(0.5)
 repeat task.wait() until game.Players.LocalPlayer.Character
@@ -233,8 +240,9 @@ wait(0.25)
 game:GetService("ReplicatedStorage").Duplicate:FireServer()
 wait(20)
 game:GetService("Players").LocalPlayer.Reset:FireServer()
-wait(3.75)
+repeat task.wait() until game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("entered") == nil and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
 fireclickdetector(workspace.Lobby.Blink.ClickDetector)
+end
 end
 end
 end
@@ -4072,7 +4080,7 @@ end
 end
 task.wait()
 end
-elseif _G.RhythmNoteSpam == true then
+elseif _G.AutoSlapCherry == true then
 Notification("You don't have Cherry equipped", 5)
 wait(0.05)
 Toggles["Auto Slap Cherry"]:SetValue(false)
@@ -6641,7 +6649,7 @@ _G.GetTeleport = Value
 _G.FarmSlap = "Replica + Baller"
 Glove2Group:AddDropdown("AutoFarm Slap", {
     Text = "Slap Farm",
-    Values = {"Replica + Baller","Replica + Baller + Blink"},
+    Values = {"Replica + Baller","Replica + Baller + Blink", "Baller", "Replica", "Blink"},
     Default = "Replica + Baller",
     Multi = false,
     Callback = function(Value)
@@ -6671,93 +6679,40 @@ Notification("You don't have Blink equipped.", 5)
 wait(0.05)
 Toggles["SlapFarm"]:SetValue(false) 
 end
+elseif _G.FarmSlap == "Replica" then
+if game.Players.LocalPlayer.leaderstats.Glove.Value == "Replica" then
+coroutine.wrap(AutoFarmSlap)(_G.FarmSlap) 
+elseif _G.AutoFarmSlap == true then
+Notification("You don't have Replica equipped.", 5) 
+wait(0.05)
+Toggles["SlapFarm"]:SetValue(false) 
+end
+elseif _G.FarmSlap == "Baller" then
+if game.Players.LocalPlayer.leaderstats.Glove.Value == "Baller" then
+coroutine.wrap(AutoFarmSlap)(_G.FarmSlap) 
+elseif _G.AutoFarmSlap == true then
+Notification("You don't have Baller equipped.", 5) 
+wait(0.05)
+Toggles["SlapFarm"]:SetValue(false) 
+end
+elseif _G.FarmSlap == "Blink" then
+if game.Players.LocalPlayer.leaderstats.Glove.Value == "Blink" then
+coroutine.wrap(AutoFarmSlap)(_G.FarmSlap) 
+elseif _G.AutoFarmSlap == true then
+Notification("You don't have Blink equipped.", 5) 
+wait(0.05)
+Toggles["SlapFarm"]:SetValue(false) 
+end
 end
 end
 while _G.AutoFarmSlap do 
 for i, v in pairs(workspace:GetChildren()) do 
                  if v.Name:match(game.Players.LocalPlayer.Name) and v:FindFirstChild("HumanoidRootPart") then
-if _G.FarmSlap == "Replica + Baller" or _G.FarmSlap == "Replica + Baller + Blink" then
 gloveHits[game.Players.LocalPlayer.leaderstats.Glove.Value]:FireServer(v:WaitForChild("HumanoidRootPart"))
-end
                  end
 end
 task.wait()
 end
-    end
-})
-
-Glove2Group:AddToggle("Slap Baller", {
-    Text = "Auto Slap Baller",
-    Default = false, 
-    Callback = function(Value) 
-_G.BallerFarm = Value
-if game.Players.LocalPlayer.leaderstats.Glove.Value == "Baller" and game.Players.LocalPlayer.Character:FindFirstChild("entered") then
-if _G.BallerFarm == true then
-coroutine.wrap(SpamBaller)()
-end
-while _G.BallerFarm do
-for _, v in pairs(workspace:GetChildren()) do
-                 if v.Name:match(game.Players.LocalPlayer.Name) and v:FindFirstChild("HumanoidRootPart") then
-game.ReplicatedStorage.GeneralHit:FireServer(v:WaitForChild("HumanoidRootPart"))
-                end
-            end
-task.wait()
-end
-elseif _G.BallerFarm == true then
-Notification("You don't have Baller equipped.", 5) 
-wait(0.05)
-Toggles["Slap Baller"]:SetValue(false) 
-end 
-    end
-})
-
-Glove2Group:AddToggle("Slap Replica", {
-    Text = "Auto Slap Replica",
-    Default = false, 
-    Callback = function(Value) 
-ReplicaFarm = Value
-if game.Players.LocalPlayer.leaderstats.Glove.Value == "Replica" then
-if ReplicaFarm == true then
-coroutine.wrap(SpamReplica)()
-end
-while ReplicaFarm do
-for i, v in pairs(workspace:GetChildren()) do
-                if v.Name:match(game.Players.LocalPlayer.Name) and v:FindFirstChild("HumanoidRootPart") then
-gloveHits[game.Players.LocalPlayer.leaderstats.Glove.Value]:FireServer(v:WaitForChild("HumanoidRootPart"))
-                end
-            end
-task.wait()
-end
-elseif ReplicaFarm == true then
-Notification("You don't have Replica equipped.", 5) 
-wait(0.05)
-Toggles["Slap Replica"]:SetValue(false) 
-end 
-    end
-})
-
-Glove2Group:AddToggle("Slap Blink", {
-    Text = "Auto Slap Blink",
-    Default = false, 
-    Callback = function(Value) 
-_G.BlinkFarm = Value
-if game.Players.LocalPlayer.leaderstats.Glove.Value == "Blink" and game.Players.LocalPlayer.Character:FindFirstChild("entered") then
-if _G.BlinkFarm == true then
-coroutine.wrap(SpamBlink)()
-end
-while _G.BlinkFarm do
-for i, v in pairs(workspace:GetChildren()) do
-                if v.Name:match(game.Players.LocalPlayer.Name) and v:FindFirstChild("HumanoidRootPart") then
-game.ReplicatedStorage.GeneralHit:FireServer(v:WaitForChild("HumanoidRootPart"))
-                end
-            end
-task.wait()
-end
-elseif _G.BlinkFarm == true then
-Notification("You don't have Blink equipped.", 5) 
-wait(0.05)
-Toggles["Slap Blink"]:SetValue(false) 
-end 
     end
 })
 
