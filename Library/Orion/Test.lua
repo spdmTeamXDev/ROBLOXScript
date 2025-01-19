@@ -6,6 +6,7 @@ local Mouse = LocalPlayer:GetMouse()
 local HttpService = game:GetService("HttpService")
 local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 local MainPart = Character:WaitForChild("HumanoidRootPart")
+local Torso = Character:WaitForChild("HumanoidRootPart")
 
 local P = Instance.new("Part", workspace)
 P.Size = Vector3.new(7, 7, 1)
@@ -18,13 +19,15 @@ SG.Face = Enum.NormalId.Front
 SG.AlwaysOnTop = true
 SG.Adornee = P
 
+local guiRotation = 0
+
 game:GetService("RunService").RenderStepped:Connect(function()
-    if MainPart then
-        P.CFrame = CFrame.lookAt(MainPart.CFrame * CFrame.new(0, 3, -5), MainPart.Position)
+    if Character and Torso then
+		P.CFrame = Torso.CFrame * CFrame.new(-2.5, 2, -2) * CFrame.Angles(0, math.rad(guiRotation), 0)
     end
 end)
-
-local PARENT = (gethui and gethui()) or workspace.P.SG
+,
+local PARENT = SG
 
 local OrionLib = {
 	Elements = {},
