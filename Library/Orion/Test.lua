@@ -26,7 +26,7 @@ game:GetService("RunService").RenderStepped:Connect(function()
 		P.CFrame = Torso.CFrame * CFrame.new(-2.5, 2, -2) * CFrame.Angles(0, math.rad(guiRotation), 0)
     end
 end)
-,
+
 local PARENT = SG
 
 local OrionLib = {
