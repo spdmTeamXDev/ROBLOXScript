@@ -14,20 +14,8 @@ P.Anchored = true
 P.CanCollide = false
 P.Transparency = 1
 
-local SG = Instance.new("SurfaceGui", P)
-SG.Face = Enum.NormalId.Front
-SG.AlwaysOnTop = true
-SG.Adornee = P
 
-local guiRotation = 0
-
-game:GetService("RunService").RenderStepped:Connect(function()
-    if Character and Torso then
-		P.CFrame = Torso.CFrame * CFrame.new(-2.5, 2, -2) * CFrame.Angles(0, math.rad(guiRotation), 0)
-    end
-end)
-
-local PARENT = SG
+local PARENT = P
 
 local OrionLib = {
 	Elements = {},
@@ -68,13 +56,24 @@ local function GetIcon(IconName)
 	end
 end   
 
-local Orion = Instance.new("ScreenGui")
+local Orion = Instance.new("SurfaceGui")
+Orion.Face = Enum.NormalId.Front
+Orion.AlwaysOnTop = true
+Orion.Adornee = P
 Orion.Name = "Orion"
 Orion.Parent = PARENT
 
 function OrionLib:IsRunning()
 	return Orion.Parent == PARENT
 end
+
+local guiRotation = 0
+
+game:GetService("RunService").RenderStepped:Connect(function()
+    if Character and Torso then
+		P.CFrame = Torso.CFrame * CFrame.new(-2.5, 2, -2) * CFrame.Angles(0, math.rad(guiRotation), 0)
+    end
+end)
 
 local function AddConnection(Signal, Function)
 	if (not OrionLib:IsRunning()) then
