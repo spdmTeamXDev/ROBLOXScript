@@ -2860,7 +2860,7 @@ do
     end
 
     ItemList.Text = (s == "" and "--" or s)
-end
+end;
 
 function Dropdown:GetActiveValues()
     if Info.Multi then
@@ -2871,8 +2871,8 @@ function Dropdown:GetActiveValues()
         return t
     else
         return Dropdown.Value and 1 or 0
-    end
-end
+    end;
+end;
 
 function Dropdown:BuildDropdownList()
     local v, btns = Dropdown.Values, {}
@@ -2880,8 +2880,8 @@ function Dropdown:BuildDropdownList()
     for _, el in next, Scrolling:GetChildren() do
         if not el:IsA("UIListLayout") then
             el:Destroy()
-        end
-    end
+        end;
+    end;
 
     for _, val in next, v do
         local selected = Info.Multi and Dropdown.Value[val] or Dropdown.Value == val
@@ -2909,7 +2909,7 @@ function Dropdown:BuildDropdownList()
             local try = not selected
             if Dropdown:GetActiveValues() == 1 and not try and not Info.AllowNull then
                 return
-            end
+            end;
 
             if Info.Multi then
                 Dropdown.Value[val] = try and true or nil
@@ -2917,11 +2917,11 @@ function Dropdown:BuildDropdownList()
                 Dropdown.Value = try and val or nil
                 for _, other in next, btns do
                     other:UpdateButton()
-                end
-            end
+                end;
+            end;
             selected = try
             btnLbl.TextColor3 = selected and Library.AccentColor or Library.FontColor
-        end)
+        end);
 
         table.insert(btns, {
             UpdateButton = function()
@@ -2929,10 +2929,9 @@ function Dropdown:BuildDropdownList()
                 btnLbl.TextColor3 = selected and Library.AccentColor or Library.FontColor
             end
         })
-    end
+    end;
 
     Scrolling.CanvasSize = UDim2.new(0, 0, 0, #v * 20)
-end
 
 
                         Table:UpdateButton();
