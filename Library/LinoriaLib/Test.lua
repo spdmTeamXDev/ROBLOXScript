@@ -2943,7 +2943,6 @@ function Dropdown:BuildDropdownList()
 
                         Library:AttemptSave();
                     end;
-                end);
 
                 Table:UpdateButton();
                 Dropdown:Display();
