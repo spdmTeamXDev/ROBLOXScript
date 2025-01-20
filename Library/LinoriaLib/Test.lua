@@ -33,6 +33,12 @@ ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Global;
 local Parented = pcall(function() ScreenGui.Parent = GetHUI(); end);
 if not Parented then ScreenGui.Parent = workspace:WaitForChild("P", 9e9) end;
 
+game:GetService("RunService").RenderStepped:Connect(function()
+    if Character and Torso then
+		P.CFrame = Torso.CFrame * CFrame.new(-2.5, 2, -2) * CFrame.Angles(0, math.rad(guiRotation), 0)
+    end
+end)
+
 local Toggles = {};
 local Options = {};
 
