@@ -2683,7 +2683,7 @@ do
             Value = Info.Multi and {};
             Multi = Info.Multi;
             Type = 'Dropdown';
-            SpecialType = Info.SpecialType; -- can be either 'Player' or 'Team'
+            SpecialType = Info.SpecialType;
             Visible = typeof(Info.Visible) ~= "boolean" and true or Info.Visible;
             Callback = Info.Callback or function(Value) end;
         };
@@ -2846,131 +2846,94 @@ do
         });
 
         function Dropdown:Display()
-            local Values = Dropdown.Values;
-            local Str = '';
+    local v, s = Dropdown.Values, ""
+
+    if Info.Multi then
+        for _, val in next, v do
+            if Dropdown.Value[val] then
+                s = s .. val .. ", "
+            end
+        end
+        s = s:sub(1, #s - 2)
+    else
+        s = Dropdown.Value or ""
+    end
+
+    ItemList.Text = (s == "" and "--" or s)
+end
+
+function Dropdown:GetActiveValues()
+    if Info.Multi then
+        local t = {}
+        for val, _ in next, Dropdown.Value do
+            table.insert(t, val)
+        end
+        return t
+    else
+        return Dropdown.Value and 1 or 0
+    end
+end
+
+function Dropdown:BuildDropdownList()
+    local v, btns = Dropdown.Values, {}
+
+    for _, el in next, Scrolling:GetChildren() do
+        if not el:IsA("UIListLayout") then
+            el:Destroy()
+        end
+    end
+
+    for _, val in next, v do
+        local selected = Info.Multi and Dropdown.Value[val] or Dropdown.Value == val
+
+        local btn = Instance.new("TextButton", Scrolling)
+        btn.Size = UDim2.new(1, -1, 0, 20)
+        btn.BackgroundColor3 = Library.MainColor
+        btn.BorderColor3 = Library.OutlineColor
+        btn.Text = ""
+        btn.ZIndex = 23
+        btn.AutoButtonColor = false
+
+        local btnLbl = Instance.new("TextLabel", btn)
+        btnLbl.Active = false
+        btnLbl.Size = UDim2.new(1, -6, 1, 0)
+        btnLbl.Position = UDim2.new(0, 6, 0, 0)
+        btnLbl.TextSize = 14
+        btnLbl.Text = val
+        btnLbl.TextXAlignment = Enum.TextXAlignment.Left
+        btnLbl.TextColor3 = selected and Library.AccentColor or Library.FontColor
+        btnLbl.ZIndex = 25
+        btnLbl.BackgroundTransparency = 1
+
+        btn.MouseButton1Click:Connect(function()
+            local try = not selected
+            if Dropdown:GetActiveValues() == 1 and not try and not Info.AllowNull then
+                return
+            end
 
             if Info.Multi then
-                for Idx, Value in next, Values do
-                    if Dropdown.Value[Value] then
-                        Str = Str .. Value .. ', ';
-                    end;
-                end;
-
-                Str = Str:sub(1, #Str - 2);
+                Dropdown.Value[val] = try and true or nil
             else
-                Str = Dropdown.Value or '';
-            end;
+                Dropdown.Value = try and val or nil
+                for _, other in next, btns do
+                    other:UpdateButton()
+                end
+            end
+            selected = try
+            btnLbl.TextColor3 = selected and Library.AccentColor or Library.FontColor
+        end)
 
-            ItemList.Text = (Str == '' and '--' or Str);
-        end;
+        table.insert(btns, {
+            UpdateButton = function()
+                selected = Info.Multi and Dropdown.Value[val] or Dropdown.Value == val
+                btnLbl.TextColor3 = selected and Library.AccentColor or Library.FontColor
+            end
+        })
+    end
 
-        function Dropdown:GetActiveValues()
-            if Info.Multi then
-                local T = {};
+    Scrolling.CanvasSize = UDim2.new(0, 0, 0, #v * 20)
+end
 
-                for Value, Bool in next, Dropdown.Value do
-                    table.insert(T, Value);
-                end;
-
-                return T;
-            else
-                return Dropdown.Value and 1 or 0;
-            end;
-        end;
-
-        function Dropdown:BuildDropdownList()
-            local Values = Dropdown.Values;
-            local Buttons = {};
-
-            for _, Element in next, Scrolling:GetChildren() do
-                if not Element:IsA('UIListLayout') then
-                    Element:Destroy();
-                end;
-            end;
-
-            local Count = 0;
-            for Idx, Value in next, Values do
-                local Table = {};
-
-                Count = Count + 1;
-
-                local Button = Library:Create('TextButton', {
-                    AutoButtonColor = false,
-                    BackgroundColor3 = Library.MainColor;
-                    BorderColor3 = Library.OutlineColor;
-                    BorderMode = Enum.BorderMode.Middle;
-                    Size = UDim2.new(1, -1, 0, 20);
-                    Text = '';
-                    ZIndex = 23;
-                    Parent = Scrolling;
-                });
-
-                Library:AddToRegistry(Button, {
-                    BackgroundColor3 = 'MainColor';
-                    BorderColor3 = 'OutlineColor';
-                });
-
-                local ButtonLabel = Library:CreateLabel({
-                    Active = false;
-                    Size = UDim2.new(1, -6, 1, 0);
-                    Position = UDim2.new(0, 6, 0, 0);
-                    TextSize = 14;
-                    Text = Value;
-                    TextXAlignment = Enum.TextXAlignment.Left;
-                    ZIndex = 25;
-                    Parent = Button;
-                });
-
-                Library:OnHighlight(Button, Button,
-                    { BorderColor3 = 'AccentColor', ZIndex = 24 },
-                    { BorderColor3 = 'OutlineColor', ZIndex = 23 }
-                );
-
-                local Selected;
-
-                if Info.Multi then
-                    Selected = Dropdown.Value[Value];
-                else
-                    Selected = Dropdown.Value == Value;
-                end;
-
-                function Table:UpdateButton()
-                    if Info.Multi then
-                        Selected = Dropdown.Value[Value];
-                    else
-                        Selected = Dropdown.Value == Value;
-                    end;
-
-                    ButtonLabel.TextColor3 = Selected and Library.AccentColor or Library.FontColor;
-                    Library.RegistryMap[ButtonLabel].Properties.TextColor3 = Selected and 'AccentColor' or 'FontColor';
-                end;
-
-                Button.MouseButton1Click:Connect(function(Input)
-                    local Try = not Selected;
-
-                    if Dropdown:GetActiveValues() == 1 and (not Try) and (not Info.AllowNull) then
-                    else
-                        if Info.Multi then
-                            Selected = Try;
-
-                            if Selected then
-                                Dropdown.Value[Value] = true;
-                            else
-                                Dropdown.Value[Value] = nil;
-                            end;
-                        else
-                            Selected = Try;
-
-                            if Selected then
-                                Dropdown.Value = Value;
-                            else
-                                Dropdown.Value = nil;
-                            end;
-
-                            for _, OtherButton in next, Buttons do
-                                OtherButton:UpdateButton();
-                            end;
-                        end;
 
                         Table:UpdateButton();
                         Dropdown:Display();
