@@ -23,7 +23,7 @@ local DrawingLib = typeof(Drawing) == "table" and Drawing or { drawing_replaced 
 local ProtectGui = protectgui or (function() end);
 local GetHUI = gethui or (function() return CoreGui end);
 
-local ScreenGui = Instance.new('ScreenGui');
+local ScreenGui = Instance.new('SurfaceGui');
 ScreenGui.Face = Enum.NormalId.Front
 ScreenGui.AlwaysOnTop = true
 ScreenGui.Adornee = P
