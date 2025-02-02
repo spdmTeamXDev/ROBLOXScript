@@ -1,1 +1,1 @@
-loadstring(game:HttpGet('https://raw.githubusercontent.com/spdmTeamXDev/ROBLOXScript/refs/heads/main/File-Script/Protected_2990853196855681.txt'))()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/spdmTeamXDev/ROBLOXScript/refs/heads/main/SCRIPT/Protected_5023257087292844.txt'))()
